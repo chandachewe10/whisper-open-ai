@@ -30,7 +30,7 @@ class HomePage extends Component
 
     public function translate()
     {
-        ini_set('max_execution_time', 180); //3 minutes
+        ini_set('max_execution_time', 600); //10 minutes
         /**
          * Check if the user has transcribed more than twice.
          */
