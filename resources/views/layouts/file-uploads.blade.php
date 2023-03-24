@@ -7,7 +7,7 @@
     <div class="row text-center text-white">
       <h class="display-3 fw-bold">Upload a File</h1>
       <hr style="width: 100px; height: 3px; " class="mx-auto">
-      <p class="lead pt-1">Upload Your Audio File</p>
+      <p class="lead pt-1">Upload Your Audio File (In English)</p>
     </div>
 
     <!-- START THE CAROUSEL CONTENT  -->

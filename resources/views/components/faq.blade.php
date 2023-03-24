@@ -62,7 +62,7 @@
             </h2>
             <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-               <p>The first 5 Speech to Text translation will be free </p>
+               <p>No. It's Free. I have limited 2 transcriptions per user. </p>
               </div>
             </div>
           </div>

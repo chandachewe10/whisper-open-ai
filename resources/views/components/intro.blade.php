@@ -6,6 +6,7 @@
   <div class="container">
     <div class="row align-items-center text-white">
       <!-- START THE CONTENT FOR THE INTRO  -->
+     
       <div class="col-md-6 intros text-start">
         <h1 class="display-2">
           <span class="display-2--intro">Speech to text</span>

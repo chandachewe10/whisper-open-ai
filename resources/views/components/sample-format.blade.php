@@ -18,8 +18,8 @@
 $web_vtt = \App\Models\ip::where('ip',"=",'41.60.184.49')->latest()->first();
 $audio_path = \App\Models\ip::where('ip',"=",'41.60.184.49')->latest()->first();
 
-$vtt = $web_vtt->vtt_path ?? 'audio.mp3';
-$audio = $audio_path->audio_path ?? 'sample.vtt';
+$audio = $audio_path->audio_path ?? 'TRACKS/sample.mp3';
+$vtt = $web_vtt->vtt_path ?? 'sample.vtt';
 @endphp
 
 
