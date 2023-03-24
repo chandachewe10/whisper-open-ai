@@ -6,6 +6,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'TRANSCRIBE') }}</title>
+        <!-- Favicons -->
+        
+     <link href="{{asset('assets/images/fav.png')}}" rel="icon">
+     <link href="{{asset('assets/images/apple-touch-icon.png')}}" rel="apple-touch-icon">
 
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/fontawesome.css')}}">
