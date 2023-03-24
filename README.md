@@ -2,11 +2,9 @@
 
 Transcribe and translate audio files using OpenAI's Whisper API.
 
-## Demo
+## Demo![gif](https://user-images.githubusercontent.com/82529756/227578172-23c46437-98eb-443d-8e95-b8f2a7eae6ed.gif)
 
 
-![demo]
-<iframe src='//gifs.com/embed/whisper-k20Mlv' frameborder='0' scrolling='no' width='1346px' height='656px' style='-webkit-backface-visibility: hidden;-webkit-transform: scale(1);' ></iframe>
 
 ## How it works
 
