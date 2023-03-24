@@ -15,8 +15,8 @@
 
 <hr>
  @php   
-$web_vtt = \App\Models\ip::where('ip',"=",'41.60.184.49')->latest()->first();
-$audio_path = \App\Models\ip::where('ip',"=",'41.60.184.49')->latest()->first();
+$web_vtt = \App\Models\ip::where('ip',"=",\Request::ip())->latest()->first();
+$audio_path = \App\Models\ip::where('ip',"=",\Request::ip())->latest()->first();
 
 $audio = $audio_path->audio_path ?? 'TRACKS/sample.mp3';
 $vtt = $web_vtt->vtt_path ?? 'sample.vtt';
