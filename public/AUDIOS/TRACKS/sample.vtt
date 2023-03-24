@@ -1,0 +1,176 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.400
+Good morning everyone, it's Nuno here and welcome to the third episode of the morning
+
+00:00:09.400 --> 00:00:11.840
+podcast.
+
+00:00:11.840 --> 00:00:20.800
+Today I would like to talk about the tools I use for my daily job.
+
+00:00:20.800 --> 00:00:29.320
+And I actually received this question a lot, so I hope this podcast helps to clarify some
+
+00:00:29.320 --> 00:00:33.400
+of those questions.
+
+00:00:33.400 --> 00:00:41.480
+Now as a laptop I use a MacBook Pro 14 inch 2021.
+
+00:00:41.480 --> 00:00:44.540
+It's an M1 and I'm very happy with it.
+
+00:00:44.540 --> 00:00:53.160
+It's fast and I've been using Able for the last 10 years I think.
+
+00:00:53.160 --> 00:01:00.720
+And it always surprised me how stable, fast it can be and just is such a high quality
+
+00:01:00.720 --> 00:01:07.120
+product that I have no intentions of changing.
+
+00:01:07.120 --> 00:01:11.840
+As a local server I use a lot of LVL.
+
+00:01:11.840 --> 00:01:18.240
+Now I receive hundreds of messages, people trying to convince me how Docker is convenient
+
+00:01:18.240 --> 00:01:27.080
+and how just easy it is, but honestly nothing sounds or looks more convenient than Valet
+
+00:01:27.080 --> 00:01:28.360
+itself.
+
+00:01:28.360 --> 00:01:41.000
+It just works, takes none time at all to just start with it and just feels better for me.
+
+00:01:41.000 --> 00:01:50.480
+As an IDE or an editor for development, I mainly use Sublime Text.
+
+00:01:50.480 --> 00:01:59.440
+And this is one of those pieces of software that I've been using for years and also works
+
+00:01:59.440 --> 00:02:00.440
+for me.
+
+00:02:00.440 --> 00:02:04.360
+And I feel really fast with it.
+
+00:02:04.360 --> 00:02:14.440
+Kind of difficult to explain when there is so many popular editor IDE tools out there,
+
+00:02:14.440 --> 00:02:21.320
+but in terms of speed of navigating on a code and then jumping between files, nothing for
+
+00:02:21.320 --> 00:02:26.200
+me is as fast as Sublime Text.
+
+00:02:26.200 --> 00:02:34.760
+Even for simple tasks as reviewing some code or trying to just brainstorm how I will develop
+
+00:02:34.760 --> 00:02:44.400
+a certain feature, Sublime Text is for me still the best tool for that out there.
+
+00:02:44.400 --> 00:02:52.420
+Now I must admit that occasionally I may use PhpStorm for refactoring.
+
+00:02:52.420 --> 00:03:01.920
+Now PhpStorm is very popular between PHP developers and I must admit that the refactoring capacities
+
+00:03:01.920 --> 00:03:05.120
+of this tool are quite impressive.
+
+00:03:05.120 --> 00:03:09.200
+So I may switch to PhpStorm when it comes to that.
+
+00:03:09.200 --> 00:03:18.060
+Within PhpStorm, I usually mainly two plugins, the Laravel IDE one, which you may know already,
+
+00:03:18.060 --> 00:03:24.400
+and obviously the PASS plugin, which gives me a great experience when using PASS and
+
+00:03:24.400 --> 00:03:28.920
+Laravel all together.
+
+00:03:28.920 --> 00:03:34.920
+Now switching for the terminal, I use a tool called IPER.
+
+00:03:34.920 --> 00:03:41.440
+It's not as popular as iTerm2, I feel like, but it's definitely more pretty.
+
+00:03:41.440 --> 00:03:46.180
+And that's the main reason I use IPER.
+
+00:03:46.180 --> 00:03:52.160
+As a database management tool, I use SQLase.
+
+00:03:52.160 --> 00:03:59.300
+And again, SQLase is this kind of old school tool, but it still works for me.
+
+00:03:59.300 --> 00:04:05.180
+I know that some people use TablePlus, but I like SQLase a lot.
+
+00:04:05.180 --> 00:04:13.060
+As a tool to serve those databases, because Laravel Valet can serve like the HTTP part
+
+00:04:13.060 --> 00:04:19.740
+of your application, but it still needs something to actually serve those databases.
+
+00:04:19.740 --> 00:04:30.100
+And I use a very simple tool, call it dbging, which allows me to have a simple MySQL 8 instance
+
+00:04:30.100 --> 00:04:32.540
+running locally.
+
+00:04:32.540 --> 00:04:41.140
+And I just start this instance, if I want to, on the dbing UI.
+
+00:04:41.140 --> 00:04:45.620
+Now some last tools I use as well as a password manager.
+
+00:04:45.620 --> 00:04:50.460
+I like a lot the LastPass application.
+
+00:04:50.460 --> 00:04:58.300
+I've been using this for a while now, even though I've seen some recent tweets about
+
+00:04:58.300 --> 00:05:03.740
+how insecure this service might be.
+
+00:05:03.740 --> 00:05:08.260
+So I may consider in the future to change.
+
+00:05:08.260 --> 00:05:14.540
+As a tool to talk with my friends, obviously at work, I use Slack to communicate within
+
+00:05:14.540 --> 00:05:16.100
+the Laravel team.
+
+00:05:16.100 --> 00:05:23.020
+But to talk with my personal buddies, I usually use Telegram.
+
+00:05:23.020 --> 00:05:25.620
+For music, I use Spotify.
+
+00:05:25.620 --> 00:05:28.680
+For emailing, I use Gmail.
+
+00:05:28.680 --> 00:05:35.000
+For all my side project servers, I tend to default to Forge.
+
+00:05:35.000 --> 00:05:41.940
+And if it's a big project, I may use Vapor to begin with.
+
+00:05:41.940 --> 00:05:49.380
+Finally, for my own blog, which is OthellonForge, I have a newsletter service and I've been
+
+00:05:49.380 --> 00:05:55.780
+using MailCoach since the beta stage and it's working great for me.
+
+00:05:55.780 --> 00:05:56.780
+And that's it.
+
+00:05:56.780 --> 00:06:06.340
+I hope you enjoyed this morning episode and see you next time.
+
