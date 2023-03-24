@@ -7,7 +7,8 @@
 <x-sample-format />
 <x-description />
 @include('layouts.file-uploads')
-<x-faq />  
+<x-faq /> 
+<x-footer />  
 </x-guest-layout>
 
 
