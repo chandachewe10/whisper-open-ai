@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\HomePage;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +16,6 @@ use App\Http\Livewire\HomePage;
 */
 
 Route::get('/', [HomePage::class, '__invoke']);
-               
 
 Route::get('/dashboard', function () {
     return view('dashboard');
