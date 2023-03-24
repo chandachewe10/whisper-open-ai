@@ -82,33 +82,7 @@
 
 
 
- <!--Transcript-->
- <br>
- <p id="latest-transcriptions" class="lead pt-1" style="color:white; font-weight:bold">Your Latest Transcriptions will appear here... </p>
-<hr>
- @php   
-$web_vtt = \App\Models\ip::where('ip',"=",'41.60.184.49')->latest()->first();
-$audio_path = \App\Models\ip::where('ip',"=",'41.60.184.49')->latest()->first();
-
-$vtt = $web_vtt->vtt_path ?? '';
-$audio = $audio_path->audio_path ?? '';
-@endphp
-
-
- <div id="webvtt" wire:ignore   
-                 data-audio="{{asset('AUDIOS/'.$audio)}}"
-                 data-transcript="{{asset('WEBVTT/VTTFILES/'.$vtt)}}"
-                 >
-       
-    
-    <script src="{{asset('assets/js/output2.js')}}"></script>
-
-    </div>
-
-
-
-
- <!--end showing transcript-->
+ 
 
 
 

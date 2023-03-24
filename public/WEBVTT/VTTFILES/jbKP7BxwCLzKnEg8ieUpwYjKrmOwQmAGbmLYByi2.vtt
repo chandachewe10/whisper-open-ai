@@ -1,0 +1,1274 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.980
+In the four videos, four, right?
+
+00:00:03.980 --> 00:00:05.980
+We did, we were talking about different things,
+
+00:00:05.980 --> 00:00:08.820
+and one of the things that you mentioned is Livewire.
+
+00:00:08.820 --> 00:00:13.380
+And I would like you to explain a bit what Livewire is.
+
+00:00:13.380 --> 00:00:15.580
+You know, from the way you describe it,
+
+00:00:15.580 --> 00:00:19.980
+I thought it's something similar to what Next is doing,
+
+00:00:19.980 --> 00:00:23.320
+but you told me it's not exactly like that.
+
+00:00:23.320 --> 00:00:25.580
+So can you explain it more, what is it?
+
+00:00:25.580 --> 00:00:30.580
+Sure, so, okay, so it came out of a project
+
+00:00:31.800 --> 00:00:35.920
+in the Elixir ecosystem, or the Phoenix ecosystem,
+
+00:00:35.920 --> 00:00:37.120
+called Phoenix LiveView.
+
+00:00:37.120 --> 00:00:40.500
+So back in January, I saw this little demo,
+
+00:00:40.500 --> 00:00:44.360
+and it was a blog post, and it showed a GIF of a thermostat,
+
+00:00:44.360 --> 00:00:46.680
+just a UI, a little front-end UI thing.
+
+00:00:46.680 --> 00:00:48.640
+And the mouse is clicking the plus sign,
+
+00:00:48.640 --> 00:00:51.360
+and the temperature's going up as the user clicks it.
+
+00:00:51.360 --> 00:00:53.800
+No page reloads, it looks like JavaScript.
+
+00:00:53.800 --> 00:00:56.320
+Then after it, it's like, no JavaScript written
+
+00:00:56.320 --> 00:00:57.880
+to achieve this, or whatever, I don't know.
+
+00:00:57.880 --> 00:01:00.120
+And so my interest was piqued, like, whoa,
+
+00:01:00.120 --> 00:01:02.980
+front-end functionality, no JavaScript.
+
+00:01:02.980 --> 00:01:06.040
+And then they show a little code snippet on this blog post,
+
+00:01:06.040 --> 00:01:08.880
+and it shows a template that looks like a backend template,
+
+00:01:08.880 --> 00:01:11.560
+where, remember, like MVC, you pass data into a view.
+
+00:01:11.560 --> 00:01:12.460
+Your template, yeah.
+
+00:01:12.460 --> 00:01:13.800
+And then your template is some, like,
+
+00:01:13.800 --> 00:01:16.440
+PHP templating or something, you echo out something.
+
+00:01:16.440 --> 00:01:18.040
+So they had that, and the template
+
+00:01:18.040 --> 00:01:19.660
+echoed out the temperature.
+
+00:01:19.660 --> 00:01:20.980
+But then there was a button that,
+
+00:01:20.980 --> 00:01:22.920
+you know in View how you have at-click?
+
+00:01:22.920 --> 00:01:24.640
+So, or V on click, or whatever, you're
+
+00:01:24.640 --> 00:01:28.160
+listening for a click event, and then updating some state.
+
+00:01:28.160 --> 00:01:30.480
+So there was that, except it was Phoenix Click,
+
+00:01:30.480 --> 00:01:32.240
+and it ran a method that updated state
+
+00:01:32.240 --> 00:01:34.600
+in the backend, what looked like a controller.
+
+00:01:34.600 --> 00:01:36.920
+And then somehow it re-rendered the whole thing,
+
+00:01:36.920 --> 00:01:39.120
+passed it all back to the front-end, all in real-time
+
+00:01:39.120 --> 00:01:41.460
+over WebSockets, and then diffs the front-end
+
+00:01:41.460 --> 00:01:43.280
+and updates the front-end.
+
+00:01:43.280 --> 00:01:45.480
+So it's pretty trippy.
+
+00:01:45.480 --> 00:01:48.540
+But from the user's perspective, you're
+
+00:01:48.540 --> 00:01:51.640
+writing a component that has a very blurry line between front-end
+
+00:01:51.640 --> 00:01:54.360
+and back-end, because your state is managed in the back-end,
+
+00:01:54.360 --> 00:01:57.240
+and you're used to that being stateless,
+
+00:01:57.240 --> 00:01:58.880
+controller-type thing.
+
+00:01:58.880 --> 00:02:00.880
+But your templating is handled in the front-end,
+
+00:02:00.880 --> 00:02:04.760
+and you're using, basically, front-end template directives,
+
+00:02:04.760 --> 00:02:07.720
+like you would in Vue.js.
+
+00:02:07.720 --> 00:02:09.680
+If you peek under the hood, how it works
+
+00:02:09.680 --> 00:02:13.100
+is there's basically a JavaScript portion.
+
+00:02:13.100 --> 00:02:14.220
+Engine or something, yeah.
+
+00:02:14.220 --> 00:02:14.720
+Yeah.
+
+00:02:14.720 --> 00:02:17.180
+There's a JavaScript engine, and there's a back-end engine.
+
+00:02:17.180 --> 00:02:19.120
+And in Phoenix, they use WebSockets,
+
+00:02:19.120 --> 00:02:22.280
+because Phoenix Elixir is great at this real-time Phoenix
+
+00:02:22.280 --> 00:02:23.840
+channels.
+
+00:02:23.840 --> 00:02:26.300
+So there's a long-running instance in the back-end.
+
+00:02:26.300 --> 00:02:28.200
+And then your long-running front-end instance,
+
+00:02:28.200 --> 00:02:29.760
+because that's just JavaScript.
+
+00:02:29.760 --> 00:02:31.840
+And so there's a listener on a button, let's say.
+
+00:02:31.840 --> 00:02:34.760
+So the user clicks that, and in the background,
+
+00:02:34.760 --> 00:02:36.720
+it fires off an Ajax request.
+
+00:02:36.720 --> 00:02:38.240
+Well, sorry, a WebSockets.
+
+00:02:38.240 --> 00:02:38.760
+Yeah.
+
+00:02:38.760 --> 00:02:41.200
+And says, hey, update the state to this.
+
+00:02:41.200 --> 00:02:42.440
+Rerender the template.
+
+00:02:42.440 --> 00:02:43.880
+Give me the DOM back.
+
+00:02:43.880 --> 00:02:45.980
+And then the front-end does a DOM diff and says,
+
+00:02:45.980 --> 00:02:48.560
+what's on the page, and what did I get back from the server?
+
+00:02:48.560 --> 00:02:50.480
+Swap the difference so that you're not
+
+00:02:50.480 --> 00:02:55.280
+wrecking state, whatever, like focus input.
+
+00:02:55.280 --> 00:02:57.720
+So change the front-end, and now it feels reactive.
+
+00:02:57.720 --> 00:03:00.600
+So honestly, it works just like ReactorView,
+
+00:03:00.600 --> 00:03:03.040
+except they keep track of a virtual DOM and a render
+
+00:03:03.040 --> 00:03:05.560
+function, and they do the diffing in review.
+
+00:03:05.560 --> 00:03:07.180
+It just happens really fast.
+
+00:03:07.180 --> 00:03:09.400
+So this is actually making round-trip to the server
+
+00:03:09.400 --> 00:03:12.160
+and deferring the whole state tracking portion of it
+
+00:03:12.160 --> 00:03:15.160
+and template rendering portion of it to the back-end.
+
+00:03:15.160 --> 00:03:16.040
+To the engine, yeah.
+
+00:03:16.040 --> 00:03:16.400
+Yeah.
+
+00:03:16.400 --> 00:03:17.320
+Does that make sense?
+
+00:03:17.320 --> 00:03:18.240
+Yeah, it makes sense.
+
+00:03:18.240 --> 00:03:18.740
+OK.
+
+00:03:18.740 --> 00:03:21.480
+Now I have the question, how far can this go?
+
+00:03:21.480 --> 00:03:26.160
+OK, for a simple example, it seems to be working.
+
+00:03:26.160 --> 00:03:28.680
+But how far, how much complexity you
+
+00:03:28.680 --> 00:03:32.320
+can get into this kind of system where it has to do a diff?
+
+00:03:32.320 --> 00:03:34.720
+Or maybe it's like, this is an idea, right?
+
+00:03:34.720 --> 00:03:37.280
+But then maybe some optimization will get it.
+
+00:03:37.280 --> 00:03:40.280
+I mean, when React started, everyone was like, whoa,
+
+00:03:40.280 --> 00:03:43.220
+you want to update only parts of the DOM,
+
+00:03:43.220 --> 00:03:44.260
+and how would you do that?
+
+00:03:44.260 --> 00:03:47.020
+And now it's working very well, and everyone is doing it.
+
+00:03:47.020 --> 00:03:48.400
+So what do you think?
+
+00:03:48.400 --> 00:03:51.600
+Yeah, so I guess it depends on what you mean by complexity.
+
+00:03:51.600 --> 00:03:54.040
+So let's say performance.
+
+00:03:54.040 --> 00:03:56.140
+So right now, it's making a server round-trip
+
+00:03:56.140 --> 00:03:57.480
+for every change you make.
+
+00:03:57.480 --> 00:03:59.600
+Where Vue.js or React, it's instant.
+
+00:03:59.600 --> 00:04:03.600
+It goes through this whole tick, and then it's done.
+
+00:04:03.600 --> 00:04:04.840
+That part, there's a limit.
+
+00:04:04.840 --> 00:04:06.560
+WebSockets make it a lot faster.
+
+00:04:06.560 --> 00:04:08.760
+PHP is not there with WebSockets.
+
+00:04:08.760 --> 00:04:11.600
+There is asynchronous PHP, and there's a lot out there.
+
+00:04:11.600 --> 00:04:14.520
+But if I wrote Livewire and based it
+
+00:04:14.520 --> 00:04:17.240
+on asynchronous WebSocket stuff, I
+
+00:04:17.240 --> 00:04:20.280
+would be limiting the user base by like 90%,
+
+00:04:20.280 --> 00:04:22.880
+because people would have to manage a WebSocket server
+
+00:04:22.880 --> 00:04:24.600
+in PHP, which is hard.
+
+00:04:24.600 --> 00:04:27.480
+So I use Ajax, and we can talk a little bit about that later.
+
+00:04:27.480 --> 00:04:29.240
+But basically, there's a limit for me
+
+00:04:29.240 --> 00:04:32.960
+of how fast these interactions can be done.
+
+00:04:32.960 --> 00:04:34.080
+So that is.
+
+00:04:34.080 --> 00:04:38.560
+The limit is because you can't use only WebSockets.
+
+00:04:38.560 --> 00:04:41.440
+Well, even if I use WebSockets, you still
+
+00:04:41.440 --> 00:04:43.640
+have to go from Tokyo to New York
+
+00:04:43.640 --> 00:04:46.000
+if your server's in New York.
+
+00:04:46.000 --> 00:04:48.360
+But anyway, imagine that functionality.
+
+00:04:48.360 --> 00:04:50.160
+That's to make the setup.
+
+00:04:50.160 --> 00:04:54.280
+That temperature up.
+
+00:04:54.280 --> 00:04:54.880
+Yeah, yeah.
+
+00:04:54.880 --> 00:04:55.880
+You click on the button.
+
+00:04:55.880 --> 00:04:56.360
+Yep.
+
+00:04:56.360 --> 00:04:57.360
+OK?
+
+00:04:57.360 --> 00:05:00.640
+Imagine this state is somewhere in some server, right?
+
+00:05:00.640 --> 00:05:01.320
+Yeah, yeah.
+
+00:05:01.320 --> 00:05:01.880
+Right.
+
+00:05:01.880 --> 00:05:05.860
+Even if React will update the interface right away,
+
+00:05:05.860 --> 00:05:09.960
+because it should still send that kind of request
+
+00:05:09.960 --> 00:05:11.720
+to somewhere to update that state, right?
+
+00:05:11.720 --> 00:05:12.220
+Yep.
+
+00:05:12.220 --> 00:05:14.080
+So you're equal here.
+
+00:05:14.080 --> 00:05:14.560
+Yes.
+
+00:05:14.560 --> 00:05:20.840
+Which part will be slower on your side with LiveWire?
+
+00:05:20.840 --> 00:05:22.720
+So LiveWire has to go back to the server,
+
+00:05:22.720 --> 00:05:24.560
+because the state's on the server,
+
+00:05:24.560 --> 00:05:26.880
+and then back to the front end before anything updates.
+
+00:05:26.880 --> 00:05:29.200
+Before anything updates, that's the thing.
+
+00:05:29.200 --> 00:05:30.400
+In some cases, yeah.
+
+00:05:30.400 --> 00:05:31.000
+Yeah.
+
+00:05:31.000 --> 00:05:31.800
+OK.
+
+00:05:31.800 --> 00:05:34.880
+Because it's the server that will be sending the DOM?
+
+00:05:34.880 --> 00:05:36.040
+The server's sending the DOM.
+
+00:05:36.040 --> 00:05:38.280
+The server handles the template rendering,
+
+00:05:38.280 --> 00:05:40.480
+so you have to wait for the full round trip
+
+00:05:40.480 --> 00:05:42.900
+to get the rendered DOM.
+
+00:05:42.900 --> 00:05:43.480
+OK.
+
+00:05:43.480 --> 00:05:47.520
+So are you now like, this is a live project?
+
+00:05:47.520 --> 00:05:48.920
+You're working on it?
+
+00:05:48.920 --> 00:05:49.420
+Yeah.
+
+00:05:49.420 --> 00:05:49.920
+Yeah?
+
+00:05:49.920 --> 00:05:50.420
+Yeah.
+
+00:05:50.420 --> 00:05:53.920
+I basically quit my job 10 months ago
+
+00:05:53.920 --> 00:05:56.840
+to go on a sabbatical for two months.
+
+00:05:56.840 --> 00:05:59.720
+And two days into it, I started this project.
+
+00:05:59.720 --> 00:06:01.000
+And I just haven't stopped.
+
+00:06:01.000 --> 00:06:02.000
+So it's been.
+
+00:06:02.000 --> 00:06:03.320
+So you have users?
+
+00:06:03.320 --> 00:06:03.800
+Oh, yeah.
+
+00:06:03.800 --> 00:06:04.320
+Yeah.
+
+00:06:04.320 --> 00:06:06.920
+Yeah, it's like 1,000-something stars on GitHub.
+
+00:06:06.920 --> 00:06:10.320
+I launched it at Laracon, the Laravel conference
+
+00:06:10.320 --> 00:06:12.640
+in June, and that's when I made the repo public.
+
+00:06:12.640 --> 00:06:15.760
+So do you see people doing what kind of apps
+
+00:06:15.760 --> 00:06:18.280
+people are doing with Livewire?
+
+00:06:18.280 --> 00:06:19.360
+Yeah.
+
+00:06:19.360 --> 00:06:24.400
+So the thing is, a lot of the need that I'm trying to solve
+
+00:06:24.400 --> 00:06:27.680
+is all that complexity that I'm talking about,
+
+00:06:27.680 --> 00:06:31.400
+this two systems, view SPA, all that, a lot of times
+
+00:06:31.400 --> 00:06:33.600
+is so that you can show a loading spinner while you're
+
+00:06:33.600 --> 00:06:37.760
+deferring some loading, maybe do some real-time searching,
+
+00:06:37.760 --> 00:06:40.840
+sorting a data table, autosaving a form.
+
+00:06:40.840 --> 00:06:43.680
+Like in reality, the nature of apps, as I see it,
+
+00:06:43.680 --> 00:06:47.520
+the average application that a developer is working on
+
+00:06:47.520 --> 00:06:49.160
+is a bunch of forms and tables.
+
+00:06:49.160 --> 00:06:51.520
+Like maybe there's some extra interactions here and there,
+
+00:06:51.520 --> 00:06:53.040
+but we're not all working on Twitter.
+
+00:06:53.040 --> 00:06:56.420
+We're working on applications with forms and tables
+
+00:06:56.420 --> 00:06:57.520
+and some interactions.
+
+00:06:57.520 --> 00:07:01.560
+But for the most part, that's what I would say it is.
+
+00:07:01.560 --> 00:07:06.380
+So it's a lot of heavy lifting to live search
+
+00:07:06.380 --> 00:07:11.180
+through a list of posts, to have live pagination,
+
+00:07:11.180 --> 00:07:14.280
+to search through a data table, to expand a row in a table
+
+00:07:14.280 --> 00:07:16.680
+and make it editable, stuff like that.
+
+00:07:16.680 --> 00:07:20.240
+So Livewire fits these use cases perfectly
+
+00:07:20.240 --> 00:07:23.600
+because you were already sending AJAX requests before.
+
+00:07:23.600 --> 00:07:25.680
+Like in the case of a real-time searching field,
+
+00:07:25.680 --> 00:07:28.360
+that's a perfect example, like a Hello World.
+
+00:07:28.360 --> 00:07:30.040
+Like you have an input element.
+
+00:07:30.040 --> 00:07:31.760
+So let's do it the Vue.js way.
+
+00:07:31.760 --> 00:07:34.240
+You have an onChange or something, or onInput.
+
+00:07:34.240 --> 00:07:36.680
+So as you type, you debounce an input and send it
+
+00:07:36.680 --> 00:07:40.240
+to the server and you get whatever JSON results back,
+
+00:07:40.240 --> 00:07:42.080
+and then you template it on the front end.
+
+00:07:42.080 --> 00:07:44.320
+So with Livewire, it does the same thing.
+
+00:07:44.320 --> 00:07:45.880
+It's listening for the input event
+
+00:07:45.880 --> 00:07:47.880
+and you would define it like that.
+
+00:07:47.880 --> 00:07:50.440
+And it's sending the request to the server,
+
+00:07:50.440 --> 00:07:52.640
+except it's doing the templating on the backend
+
+00:07:52.640 --> 00:07:55.360
+and then sending the full HTML to the front end
+
+00:07:55.360 --> 00:07:56.840
+instead of just JSON.
+
+00:07:56.840 --> 00:08:01.280
+Can't you argue that it can be faster on the search?
+
+00:08:01.280 --> 00:08:04.180
+Some instances it can be faster
+
+00:08:04.180 --> 00:08:07.720
+and there's some, but in one specific way
+
+00:08:07.720 --> 00:08:09.840
+it can be a lot faster is you can cache templates
+
+00:08:09.840 --> 00:08:12.200
+on the backend and share them between users.
+
+00:08:12.200 --> 00:08:14.160
+And you're not doing any CPU on,
+
+00:08:14.160 --> 00:08:16.280
+much less CPU on the client, right?
+
+00:08:16.280 --> 00:08:17.520
+But I'll say performance-wise,
+
+00:08:17.520 --> 00:08:19.000
+there's enough give and take that I don't,
+
+00:08:19.000 --> 00:08:21.480
+I'm not going around and preaching about this
+
+00:08:21.480 --> 00:08:23.640
+because it's gonna make your applications faster.
+
+00:08:23.640 --> 00:08:25.840
+It's gonna make you faster as a developer.
+
+00:08:25.840 --> 00:08:27.840
+Okay, it's more about the productivity.
+
+00:08:27.840 --> 00:08:30.840
+Productivity and just app reliability in general
+
+00:08:30.840 --> 00:08:33.520
+because you can write tests, you can write Livewire tests
+
+00:08:33.520 --> 00:08:36.720
+and test this functionality all in backend code.
+
+00:08:36.720 --> 00:08:40.480
+So if I was writing that auto-search component in Livewire,
+
+00:08:40.480 --> 00:08:41.320
+in the view example,
+
+00:08:41.320 --> 00:08:44.560
+you'd have to test all the API endpoint stuff.
+
+00:08:44.560 --> 00:08:46.840
+You'd have to test all the view stuff, right?
+
+00:08:46.840 --> 00:08:48.780
+And then mock the difference between the two.
+
+00:08:48.780 --> 00:08:51.160
+With Livewire, you can write one test in the backend
+
+00:08:51.160 --> 00:08:55.760
+that says, init the component, type this into the search
+
+00:08:55.760 --> 00:08:58.260
+or set the search state to hello world,
+
+00:08:58.260 --> 00:09:01.200
+assert that I don't see hello world in the rendered HTML
+
+00:09:01.200 --> 00:09:04.400
+or assert that I do see hello world in the rendered HTML.
+
+00:09:04.400 --> 00:09:06.920
+Okay, so now that,
+
+00:09:06.920 --> 00:09:09.320
+so can you give me please some examples,
+
+00:09:09.320 --> 00:09:11.940
+like maybe five, six examples of things
+
+00:09:11.940 --> 00:09:14.120
+you can do easily with Livewire?
+
+00:09:14.120 --> 00:09:16.000
+Like, I don't know, you told me,
+
+00:09:16.000 --> 00:09:17.960
+for instance, you gave an example of the search.
+
+00:09:17.960 --> 00:09:18.800
+That's one example.
+
+00:09:18.800 --> 00:09:20.320
+Can you give us some other examples
+
+00:09:20.320 --> 00:09:21.920
+so that people can project,
+
+00:09:21.920 --> 00:09:24.800
+oh yeah, this is what I need for my app and that's enough?
+
+00:09:24.800 --> 00:09:28.000
+Yeah, a very simple one is deferred loading.
+
+00:09:28.000 --> 00:09:31.320
+So this is one, I just, the talk,
+
+00:09:31.320 --> 00:09:33.440
+I just gave at Fullstack EU, it'll be online.
+
+00:09:33.440 --> 00:09:34.920
+This is sort of the project, the-
+
+00:09:34.920 --> 00:09:37.480
+We'll link to it in the-
+
+00:09:37.480 --> 00:09:38.320
+That would be great.
+
+00:09:38.320 --> 00:09:39.140
+In the description.
+
+00:09:39.140 --> 00:09:42.240
+Yeah, and I walked through this deferred loading problem
+
+00:09:42.240 --> 00:09:44.440
+because I had been resisting the complexity of JavaScript
+
+00:09:44.440 --> 00:09:46.400
+for a little bit, maybe two years ago,
+
+00:09:46.400 --> 00:09:48.120
+trying not to pull in view.
+
+00:09:48.120 --> 00:09:50.760
+But then I was creating an invoices page
+
+00:09:50.760 --> 00:09:52.940
+and I needed to pull invoices from Stripe.
+
+00:09:52.940 --> 00:09:55.000
+And like, I'm not gonna, you know,
+
+00:09:55.000 --> 00:09:56.760
+make my users spend three seconds
+
+00:09:56.760 --> 00:09:58.440
+waiting for the whole page to load.
+
+00:09:58.440 --> 00:10:01.200
+So I'll need to pull in view, make a loading spinner,
+
+00:10:01.200 --> 00:10:03.240
+send an Ajax request, get the JSON.
+
+00:10:04.520 --> 00:10:08.200
+But I found this pattern in the Rails community.
+
+00:10:08.200 --> 00:10:10.000
+I'm calling it server fetched partials,
+
+00:10:10.000 --> 00:10:12.920
+but the concept is send the Ajax request,
+
+00:10:12.920 --> 00:10:14.480
+but just fetch HTML,
+
+00:10:14.480 --> 00:10:17.680
+fetch a partial from an endpoint instead of JSON,
+
+00:10:17.680 --> 00:10:19.240
+and then swap it into the page.
+
+00:10:20.160 --> 00:10:22.400
+Which by the way, that's the fundamental pattern
+
+00:10:22.400 --> 00:10:23.740
+behind all of these tools.
+
+00:10:23.740 --> 00:10:25.880
+LiveWire, LiveView is this concept
+
+00:10:25.880 --> 00:10:28.840
+of rendering small pieces in the backend.
+
+00:10:28.840 --> 00:10:31.800
+So anyway, this deferred loading example
+
+00:10:31.800 --> 00:10:34.040
+is a perfect case for LiveWire
+
+00:10:34.040 --> 00:10:37.500
+that you could very easily come back to the server
+
+00:10:37.500 --> 00:10:39.920
+and get your template with LiveWire.
+
+00:10:39.920 --> 00:10:41.720
+Where is your coding simple?
+
+00:10:41.720 --> 00:10:45.520
+You're just getting this from Stripe and serving it.
+
+00:10:45.520 --> 00:10:47.040
+But it will behave in the right way.
+
+00:10:47.040 --> 00:10:48.360
+And the backend code you're writing
+
+00:10:48.360 --> 00:10:49.760
+is mostly the stuff that you'd normally
+
+00:10:49.760 --> 00:10:51.440
+be putting inside a controller.
+
+00:10:51.440 --> 00:10:53.600
+So yeah, simple code, but it behaves
+
+00:10:53.600 --> 00:10:56.240
+the way you want it to behave in the user experience.
+
+00:10:56.240 --> 00:10:59.680
+And your templates can use your backend templating language.
+
+00:10:59.680 --> 00:11:01.320
+They are backend templates.
+
+00:11:01.320 --> 00:11:04.160
+So they can fetch stuff from the database if you want.
+
+00:11:04.160 --> 00:11:07.580
+You have direct access, it's all private authorization,
+
+00:11:07.580 --> 00:11:10.320
+user auth, stuff like that that's hard on the front end
+
+00:11:10.320 --> 00:11:11.920
+is taken care of.
+
+00:11:11.920 --> 00:11:14.260
+And SEO, because it's all backend templates,
+
+00:11:14.260 --> 00:11:16.880
+it renders statically from the first run.
+
+00:11:18.240 --> 00:11:20.080
+Any other examples?
+
+00:11:20.080 --> 00:11:24.560
+So auto-saving a form, that's a great example.
+
+00:11:25.680 --> 00:11:27.840
+You're typing into a form and you want it,
+
+00:11:27.840 --> 00:11:29.760
+or real-time validation.
+
+00:11:29.760 --> 00:11:31.460
+These are things that are very easy.
+
+00:11:31.460 --> 00:11:35.440
+So in Laravel, I guess the default way to validate
+
+00:11:35.440 --> 00:11:38.320
+is a full form submission, do the validation,
+
+00:11:38.320 --> 00:11:40.520
+redirect back with some flash session data
+
+00:11:40.520 --> 00:11:42.520
+and show the error.
+
+00:11:42.520 --> 00:11:45.500
+So you can use actually Laravel's validator utilities
+
+00:11:45.500 --> 00:11:48.360
+in your LiveWire component so that as you're typing,
+
+00:11:48.360 --> 00:11:50.880
+it'll just validate on every,
+
+00:11:50.880 --> 00:11:52.520
+it has debouncing functionality
+
+00:11:52.520 --> 00:11:54.640
+so you can set a debounce on the typing.
+
+00:11:54.640 --> 00:11:56.560
+But that's all the validation on the server?
+
+00:11:56.560 --> 00:12:00.100
+Yeah, all the, on the server real-time using the same.
+
+00:12:00.100 --> 00:12:03.560
+That's the thing, using the same validation rules.
+
+00:12:03.560 --> 00:12:04.840
+The same validation rules.
+
+00:12:04.840 --> 00:12:06.120
+So you don't have to duplicate them.
+
+00:12:06.120 --> 00:12:08.120
+No duplicate validation, exactly.
+
+00:12:08.120 --> 00:12:08.960
+That's cool because.
+
+00:12:08.960 --> 00:12:10.280
+And your same template.
+
+00:12:10.280 --> 00:12:11.920
+So your validation backend template,
+
+00:12:11.920 --> 00:12:15.040
+if you have a backend, just a static one,
+
+00:12:15.040 --> 00:12:16.180
+it's the same exact template.
+
+00:12:16.180 --> 00:12:17.640
+You could use the same include.
+
+00:12:17.640 --> 00:12:20.600
+Because that you see it often on some apps.
+
+00:12:20.600 --> 00:12:23.480
+Because there is front-end code and backend code,
+
+00:12:23.480 --> 00:12:27.560
+if your thing happens to validate on the server side,
+
+00:12:27.560 --> 00:12:30.680
+then even the message might change or the style can change.
+
+00:12:30.680 --> 00:12:32.480
+And it's like, it's weird.
+
+00:12:32.480 --> 00:12:33.960
+Why this message is different
+
+00:12:33.960 --> 00:12:35.480
+from the other message that I got.
+
+00:12:35.480 --> 00:12:36.320
+So there are two kinds.
+
+00:12:36.320 --> 00:12:38.460
+And that's the best case if it's handled well.
+
+00:12:38.460 --> 00:12:40.760
+If not, it's just a whoop, something went wrong.
+
+00:12:40.760 --> 00:12:41.600
+Or you know.
+
+00:12:41.600 --> 00:12:42.880
+Yeah, these kind of things, yeah.
+
+00:12:42.880 --> 00:12:45.160
+And this way you're coherent in both ways.
+
+00:12:45.160 --> 00:12:46.320
+Yep, exactly.
+
+00:12:46.320 --> 00:12:48.640
+It's a make more things the same.
+
+00:12:48.640 --> 00:12:50.560
+It's keeping it all in one place.
+
+00:12:50.560 --> 00:12:51.400
+Yeah.
+
+00:12:51.400 --> 00:12:54.600
+So it's Laravel, right?
+
+00:12:54.600 --> 00:12:56.520
+Livewire is for Laravel, yes.
+
+00:12:56.520 --> 00:12:57.440
+Yeah.
+
+00:12:57.440 --> 00:12:58.400
+But there is JavaScript,
+
+00:12:58.400 --> 00:13:00.280
+but you don't code in JavaScript.
+
+00:13:00.280 --> 00:13:04.200
+So, I mean, Livewire is like 60% JavaScript actually.
+
+00:13:04.200 --> 00:13:07.000
+So I spend most of my time writing JavaScript.
+
+00:13:07.000 --> 00:13:09.000
+So that no one else can have to write.
+
+00:13:09.000 --> 00:13:11.900
+But it actually, it provides you with some utilities
+
+00:13:11.900 --> 00:13:13.480
+if you wanna bring your own JavaScript.
+
+00:13:13.480 --> 00:13:14.320
+So.
+
+00:13:14.320 --> 00:13:15.460
+Kind of extensions to.
+
+00:13:15.460 --> 00:13:18.080
+So it gives you an API out of the box.
+
+00:13:18.080 --> 00:13:19.180
+So from your JavaScript,
+
+00:13:19.180 --> 00:13:21.360
+you can call on your Livewire components.
+
+00:13:22.400 --> 00:13:25.680
+You could use, it actually supports Vue.js right now.
+
+00:13:25.680 --> 00:13:28.840
+So you could just use a Vue component inside of Livewire
+
+00:13:28.840 --> 00:13:32.280
+and bind to a Vue component that uses V,
+
+00:13:32.280 --> 00:13:34.300
+or like V model in a Vue component.
+
+00:13:34.300 --> 00:13:35.720
+You could do wire model.
+
+00:13:35.720 --> 00:13:39.160
+Basically Livewire syntax is almost exactly like Vue syntax.
+
+00:13:39.160 --> 00:13:40.600
+So it's very similar.
+
+00:13:40.600 --> 00:13:42.640
+So you can kind of mix front end components
+
+00:13:42.640 --> 00:13:44.840
+with these Livewire components.
+
+00:13:44.840 --> 00:13:46.320
+But basically what I would do
+
+00:13:46.320 --> 00:13:48.320
+if I was making an app right now,
+
+00:13:48.320 --> 00:13:51.080
+if I wanted to like a specific input element
+
+00:13:51.080 --> 00:13:52.480
+that had to be reactive,
+
+00:13:52.480 --> 00:13:54.400
+like not go to the server and back reactive,
+
+00:13:54.400 --> 00:13:56.380
+like JavaScript reactive,
+
+00:13:56.380 --> 00:13:58.880
+I would probably make a web, like a web component,
+
+00:13:59.840 --> 00:14:02.520
+or make a React component and wrap it in a web component,
+
+00:14:02.520 --> 00:14:04.640
+or a Vue component and wrap it in a web component,
+
+00:14:04.640 --> 00:14:07.920
+or write a little bit of vanilla JS in a script tag
+
+00:14:07.920 --> 00:14:09.380
+and do that.
+
+00:14:09.380 --> 00:14:10.280
+Yeah.
+
+00:14:10.280 --> 00:14:11.680
+So then there's something,
+
+00:14:11.680 --> 00:14:13.140
+and you made me think of something.
+
+00:14:13.140 --> 00:14:17.360
+So basically you described it in another video,
+
+00:14:17.360 --> 00:14:20.760
+you described that bringing components to the server.
+
+00:14:20.760 --> 00:14:21.600
+So server side components.
+
+00:14:21.600 --> 00:14:23.440
+Yeah, server side components, yeah.
+
+00:14:23.440 --> 00:14:25.360
+So there's a thing, a story,
+
+00:14:25.360 --> 00:14:27.720
+and it's a real story that with Prismic,
+
+00:14:27.720 --> 00:14:28.960
+when we started Prismic,
+
+00:14:28.960 --> 00:14:31.940
+we didn't have React or anything like that.
+
+00:14:31.940 --> 00:14:33.240
+It was very early.
+
+00:14:33.240 --> 00:14:35.360
+And so we wanted to write things
+
+00:14:35.360 --> 00:14:36.960
+into some kind of component model,
+
+00:14:36.960 --> 00:14:38.320
+but we didn't have React.
+
+00:14:38.320 --> 00:14:42.760
+And it wasn't me, it was someone else on the project.
+
+00:14:42.760 --> 00:14:43.800
+His name is Guillaume.
+
+00:14:43.800 --> 00:14:48.600
+Anyway, he had to do a system where we render partials.
+
+00:14:48.600 --> 00:14:50.720
+Basically we had these kind of templates.
+
+00:14:50.720 --> 00:14:52.160
+They were Scala templates.
+
+00:14:52.160 --> 00:14:54.360
+And whenever you change something,
+
+00:14:54.360 --> 00:14:56.520
+it will go and fetch only the part
+
+00:14:56.520 --> 00:14:59.600
+that is responsible of that part of the screen alone.
+
+00:14:59.600 --> 00:15:01.240
+It will not fetch the whole thing.
+
+00:15:01.240 --> 00:15:04.160
+And now we've been spending like two years
+
+00:15:04.160 --> 00:15:07.960
+into moving away from that into components.
+
+00:15:07.960 --> 00:15:10.000
+Now if you tell me that the story,
+
+00:15:10.000 --> 00:15:12.620
+now we will have to go back to it.
+
+00:15:12.620 --> 00:15:15.800
+You ever, on GitHub, if you go to GitHub
+
+00:15:15.800 --> 00:15:17.800
+and you open your dev tools,
+
+00:15:17.800 --> 00:15:20.200
+and you inspect the XHR requests,
+
+00:15:20.200 --> 00:15:22.280
+everything you do, this is all over GitHub.
+
+00:15:22.280 --> 00:15:24.240
+Like GitHub works this way.
+
+00:15:24.240 --> 00:15:26.520
+You hover over, if you go to the issues tab
+
+00:15:26.520 --> 00:15:29.580
+and you hover over like a author searching or something,
+
+00:15:29.580 --> 00:15:31.120
+it'll send an AJAX request,
+
+00:15:31.120 --> 00:15:33.000
+fetch the partial that's gonna be shown
+
+00:15:33.000 --> 00:15:35.400
+when you click on it, and then it's gonna show it.
+
+00:15:35.400 --> 00:15:38.720
+They do it, like everything in GitHub is done this way.
+
+00:15:38.720 --> 00:15:41.680
+50% I guess of Prismic right now is running that way.
+
+00:15:41.680 --> 00:15:42.880
+That's interesting.
+
+00:15:42.880 --> 00:15:45.160
+I was poking around your AJAX requests
+
+00:15:45.160 --> 00:15:47.680
+because I was typing in the name of a custom type,
+
+00:15:47.680 --> 00:15:50.400
+and as I was typing, it was kind of showing me the name,
+
+00:15:50.400 --> 00:15:51.520
+but formatted.
+
+00:15:51.520 --> 00:15:54.400
+There was a little lag and I thought, are they doing this?
+
+00:15:54.400 --> 00:15:55.920
+But it was just JSON.
+
+00:15:55.920 --> 00:15:57.120
+It depends on screens.
+
+00:15:57.120 --> 00:15:59.600
+Some screens we already migrated into React app
+
+00:15:59.600 --> 00:16:03.200
+because mostly because there are more developers,
+
+00:16:03.200 --> 00:16:05.640
+front end developers working on that.
+
+00:16:05.640 --> 00:16:08.880
+And we used our own framework back then.
+
+00:16:08.880 --> 00:16:12.480
+But more than 50%, I guess, Prismic is still running that way.
+
+00:16:12.480 --> 00:16:13.320
+Nice.
+
+00:16:13.320 --> 00:16:14.160
+That's funny.
+
+00:16:14.160 --> 00:16:15.160
+So we'll go back to it.
+
+00:16:15.160 --> 00:16:17.040
+Yeah, go back to it.
+
+00:16:17.040 --> 00:16:17.880
+Thank you very much.
+
+00:16:17.880 --> 00:16:42.880
+Absolutely.
+

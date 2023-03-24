@@ -29,6 +29,7 @@ class HomePage extends Component
 
 
     public function translate(){
+        ini_set('max_execution_time', 180); //3 minutes
     /**
       * Check if the user has transcribed more than twice.
       */
@@ -72,7 +73,8 @@ class HomePage extends Component
                     'audio_path' => $file_path,
                     'vtt_path' => $vtt_path
                 ]);
-                return redirect(request()->header('Referer').'#latest-transcriptions');
+                return redirect(request()->header('Referer'));
+              
              
      
 
