@@ -12,6 +12,6 @@ class ip extends Model
     protected $fillable = [
         'ip',
         'audio_path',
-        'vtt_path'
+        'vtt_path',
     ];
 }
