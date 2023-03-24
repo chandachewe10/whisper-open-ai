@@ -210,7 +210,8 @@
 
 
  <!--Transcript-->
- <p class="lead pt-1" style="color:white; font-weight:bold">Your Latest Transcriptions will appear here... </p>
+ <br>
+ <p id="latest-transcriptions" class="lead pt-1" style="color:white; font-weight:bold">Your Latest Transcriptions will appear here... </p>
 <hr>
  @php   
 $web_vtt = \App\Models\ip::where('ip',"=",'41.60.184.49')->latest()->first();

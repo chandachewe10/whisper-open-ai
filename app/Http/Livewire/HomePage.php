@@ -65,18 +65,18 @@ class HomePage extends Component
 
 
                 /**
-                  * Store Users IP Address with File Path for each successfull transcription.
+                  * Store Users IP Address with File Path and Vtt Path for each successfull transcription.
                   */
                   ip::create([
                     'ip' => $users_ip,
                     'audio_path' => $file_path,
                     'vtt_path' => $vtt_path
                 ]);
-
-
+                return redirect(request()->header('Referer').'#latest-transcriptions');
+             
      
 
-
+                
               
             } else {
                 $this->transcription_status = 3;
