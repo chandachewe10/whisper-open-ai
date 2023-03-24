@@ -31,7 +31,7 @@
           </svg>
         </div>
         <div class="contact-box__info">
-          <a href="#" class="contact-box__info--title">chewec03@icloud.com</a>
+          <a href="#" class="contact-box__info--title">chandac@speechtext.ai</a>
           <p class="contact-box__info--subtitle">Online support</p>
         </div>
       </div>
@@ -64,10 +64,10 @@
       <div class="row text-center text-white">
         <div class="col-12">
           <div class="footer-bottom__copyright">
-            &COPY; Copyright {{date('Y')}}. Created, Owned and mantained by <a href="https://github.com/chandachewe10" target="_blank">Chanda Chewe</a><br><br>
-
+            &COPY; Copyright {{date('Y')}}. Created, Owned and Mantained by <a href="https://github.com/chandachewe10" target="_blank">Chanda Chewe</a><br><br>
+<p>Some rights reserved</p>
             Distributed by <a href="https://github.com/chandachewe10" target="_blank">Chanda Chewe</a>.
-            <p>Terms of Use</p>
+            <p><a href="{{route('privacy.policy')}}">Privacy Policy</a></p>
           </div>
         </div>
       </div>
