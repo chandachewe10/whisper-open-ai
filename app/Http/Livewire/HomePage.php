@@ -37,7 +37,7 @@ class HomePage extends Component
         $users_ip = '41.60.184.49'; //request()->ip;
         $this->ip = $users_ip;
         $check = ip::where('ip', '=', $users_ip)->get();
-        if (count($check) >= 1112) {
+        if (count($check) >= 3) {
             session()->flash('message', 'You can only transcribe twice as at now, and you have reached the maximum!');
         } else {
             $this->validate([
