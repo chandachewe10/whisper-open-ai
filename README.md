@@ -20,7 +20,7 @@ git clone https://github.com/chandachewe10/whisper-open-ai.git
 
 ### Create an OpenAI account and link your API key.
 
-1. Sign up at [OpenAI](https://openai.com/) to create a free account (you'll get $18 credits)
+1. Sign up at [OpenAI](https://openai.com/) to create a free account (you'll get $5 credits)
 2. Click on the "User" / "API Keys" menu item and create a new API key
 3. Copy `.env.example` file to `.env` and Configure the `OPEN_AI_API_KEY` environment variable
 
