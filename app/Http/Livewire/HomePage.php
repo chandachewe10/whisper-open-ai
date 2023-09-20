@@ -57,8 +57,8 @@ class HomePage extends Component
                     'response_format' => 'vtt',
                     'temperature'     => 0.2,
                 ]);
-                $vtt_path = Str::random(40).'.vtt';
-                Storage::disk('webvtt')->put('VTTFILES/'.$vtt_path, $response);
+                $vtt_path = 'VTTFILES/'.Str::random(40).'.vtt';
+                Storage::disk('webvtt')->put($vtt_path, $response);
                 if ($response->status() == 200) {
                     $this->output = $response;
                     $this->transcription_status = 2;
