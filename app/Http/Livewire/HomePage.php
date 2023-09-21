@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Jobs\TranscribeAudio;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -47,38 +48,9 @@ class HomePage extends Component
             $file_path = $this->audio->store('TRACKS');
             $this->audio_path = $file_path;
 
-            try {
-                $response = Http::timeout(300)->attach(
-                    'file',
-                    fopen(public_path('AUDIOS/'.$file_path), 'r'),
-                )->withToken(config('openai.token'))->post(config('openai.base_uri').'audio/transcriptions', [
+            TranscribeAudio::dispatch($this->audio_path,$this->transcription_status,$this->ip,$this->exception);
 
-                    'model'           => 'whisper-1',
-                    'response_format' => 'vtt',
-                    'temperature'     => 0.2,
-                ]);
-                $vtt_path = 'VTTFILES/'.Str::random(40).'.vtt';
-                Storage::disk('webvtt')->put($vtt_path, $response);
-                if ($response->status() == 200) {
-                    $this->output = $response;
-                    $this->transcription_status = 2;
-
-                    /**
-                     * Store Users IP Address with File Path and Vtt Path for each successfull transcription.
-                     */
-                    ip::create([
-                        'ip'         => $users_ip,
-                        'audio_path' => $file_path,
-                        'vtt_path'   => $vtt_path,
-                    ]);
-
-                    return redirect(request()->header('Referer'));
-                } else {
-                    $this->transcription_status = 3;
-                }
-            } catch(Exception $e) {
-                $this->exception = $e;
-            }
+           
         }
     }
 }
