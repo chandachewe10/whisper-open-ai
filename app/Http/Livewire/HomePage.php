@@ -2,12 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ip;
-use Exception;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use App\Jobs\TranscribeAudio;
+use App\Models\ip;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -48,9 +44,7 @@ class HomePage extends Component
             $file_path = $this->audio->store('TRACKS');
             $this->audio_path = $file_path;
 
-            TranscribeAudio::dispatch($this->audio_path,$this->transcription_status,$this->ip,$this->exception);
-
-           
+            TranscribeAudio::dispatch($this->audio_path, $this->transcription_status, $this->ip, $this->exception);
         }
     }
 }
