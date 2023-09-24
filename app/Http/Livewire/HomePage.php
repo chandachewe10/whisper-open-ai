@@ -46,9 +46,9 @@ class HomePage extends Component
                 $this->alert('warning', 'You can only transcribe twice as at now, and you have reached the maximum!');
             } else {
                 $this->validate([
-                    'audio' => 'file|max:25600', // 24 MB Max
+                    'audio' => 'file|max:25600', // 25 MB Max (25 * 1024)
                 ]);
-
+                
 
 
 
