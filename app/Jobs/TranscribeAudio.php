@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\ip;
 use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,16 +15,22 @@ use Illuminate\Support\Str;
 
 class TranscribeAudio implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
+    public $audio_path;
+    public $transcription_status;
+    public $ip;
+    public $output;
+    public $audio_duration;
 
-    public $audio_path, $transcription_status, $ip, $output,$audio_duration;
     /**
      * Create a new job instance.
      */
     public function __construct($audio_path, $transcription_status, $ip, $audio_duration)
     {
-
         $this->audio_path = $audio_path;
         $this->transcription_status = $transcription_status;
         $this->ip = $ip;
@@ -40,24 +45,21 @@ class TranscribeAudio implements ShouldQueue
         ini_set('max_execution_time', 300); //5 minutes
 
         $processing = ip::create([
-            'ip'         => $this->ip,
+            'ip'                      => $this->ip,
             'transacription_status'   => 'TRANSCRIBING',
         ]);
-
-
-
 
         try {
             $response = Http::timeout(300)->attach(
                 'file',
-                fopen(public_path('AUDIOS/' . $this->audio_path), 'r'),
-            )->withToken(config('openai.token'))->post(config('openai.base_uri') . 'audio/transcriptions', [
+                fopen(public_path('AUDIOS/'.$this->audio_path), 'r'),
+            )->withToken(config('openai.token'))->post(config('openai.base_uri').'audio/transcriptions', [
 
                 'model'           => 'whisper-1',
                 'response_format' => 'vtt',
                 'temperature'     => 0.2,
             ]);
-            $vtt_path = 'VTTFILES/' . Str::random(40) . '.vtt';
+            $vtt_path = 'VTTFILES/'.Str::random(40).'.vtt';
             Storage::disk('webvtt')->put($vtt_path, $response);
             if ($response->status() == 200) {
                 $this->output = $response;
@@ -67,9 +69,9 @@ class TranscribeAudio implements ShouldQueue
                  * Store Users IP Address with File Path and Vtt Path for each successfull transcription.
                  */
                 $processing->update([
-                    'ip'         => $this->ip,
-                    'audio_path' => $this->audio_path,
-                    'vtt_path'   => $vtt_path,
+                    'ip'                      => $this->ip,
+                    'audio_path'              => $this->audio_path,
+                    'vtt_path'                => $vtt_path,
                     'transacription_status'   => 'TRANSCRIBED',
                 ]);
             } else {
@@ -81,7 +83,7 @@ class TranscribeAudio implements ShouldQueue
             $processing->update([
                 'transacription_status'   => 'FAILED',
             ]);
-            log('An error occurred for this IP Address : ' . $this->ip . ' ERROR: ' . $e->getMessage());
+            log('An error occurred for this IP Address : '.$this->ip.' ERROR: '.$e->getMessage());
         }
     }
 }
