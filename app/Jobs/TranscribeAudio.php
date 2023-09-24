@@ -19,16 +19,17 @@ class TranscribeAudio implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 
-    public $audio_path, $transcription_status, $ip, $output;
+    public $audio_path, $transcription_status, $ip, $output,$audio_duration;
     /**
      * Create a new job instance.
      */
-    public function __construct($audio_path, $transcription_status, $ip)
+    public function __construct($audio_path, $transcription_status, $ip, $audio_duration)
     {
 
         $this->audio_path = $audio_path;
         $this->transcription_status = $transcription_status;
         $this->ip = $ip;
+        $this->audio_duration = $audio_duration;
     }
 
     /**
@@ -36,7 +37,7 @@ class TranscribeAudio implements ShouldQueue
      */
     public function handle(): void
     {
-
+        ini_set('max_execution_time', 300); //5 minutes
 
         $processing = ip::create([
             'ip'         => $this->ip,
@@ -73,14 +74,14 @@ class TranscribeAudio implements ShouldQueue
                 ]);
             } else {
                 $processing->update([
-                    'transacription_status'   => 'TRANSCRIBED',
+                    'transacription_status'   => 'FAILED',
                 ]);
             }
         } catch (Exception $e) {
             $processing->update([
-                'transacription_status'   => 'TRANSCRIBED',
+                'transacription_status'   => 'FAILED',
             ]);
-            log('An error occurred for this IP Address : '.$this->ip .' ERROR: ' .$e->getMessage());
+            log('An error occurred for this IP Address : ' . $this->ip . ' ERROR: ' . $e->getMessage());
         }
     }
 }

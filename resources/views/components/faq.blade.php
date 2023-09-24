@@ -62,7 +62,11 @@
             </h2>
             <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-               <p>The first 5 Speech to Text translation will be free </p>
+               <p>Any Audio which is less than 5 minutes is free for transcription. Any Audio above 5 minutes will be considered as a meeting and you 
+                will need to pay to transcribe. Furthermore all free transcriptions (audios less than 5 minutes) will be deleted after 24 hours from 
+                the time they were transcribed, however the meeting transcriptions (audios greater than 5 minutes) will be stored in the 
+                system unless the user decides to remove them.     
+               </p>
               </div>
             </div>
           </div>
