@@ -57,17 +57,18 @@ class HomePage extends Component
                 $audiofile = new AudioDuration('AUDIOS/' . $this->audio_path);
                 $duration = $audiofile->getDurationEstimate();
                 $this->audioDuration = $duration;
-                if ($this->audioDuration < 5) {
+                if ($this->audioDuration <= 300) {
                     $this->transcription_status = 'INITIATED';
                     TranscribeAudio::dispatch($this->audio_path, $this->transcription_status, $this->ip, $this->audioDuration);
                     $this->emit('refreshComponent'); //updated transcription_status and other variables to be noticed on front side
 
-                } elseif ($this->audioDuration >= 5) {
-                    $this->alert('warning', 'Audios Longer than 5 minutes cannot be transcribed for free. To transcribe this audio go on Meetings below.', [
+                } elseif ($this->audioDuration > 300) {
+                    $this->alert('warning', 'Your Audio is ' . floor($this->audioDuration / 60) . ' minutes and ' . ($this->audioDuration % 60) . ' seconds. Audios longer than 5 minutes cannot be transcribed for free. Please make payments to transcribe.', [
                         'position' => 'center',
                         'timer' => 10000,
                         'toast' => true,
                         'showConfirmButton' => true,
+                        'confirmButtonText' => 'Make Payments',
                         'onConfirmed' => '',
                     ]);
                 } else {
