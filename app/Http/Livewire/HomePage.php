@@ -24,7 +24,7 @@ class HomePage extends Component
     public string $ip;
     public float $audioDuration;
 
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    // protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function render()
     {
@@ -48,7 +48,7 @@ class HomePage extends Component
                 $this->validate([
                     'audio' => 'file|max:25600', // 25 MB Max (25 * 1024)
                 ]);
-                
+
 
 
 
@@ -60,8 +60,7 @@ class HomePage extends Component
                 if ($this->audioDuration <= 300) {
                     $this->transcription_status = 'INITIATED';
                     TranscribeAudio::dispatch($this->audio_path, $this->transcription_status, $this->ip, $this->audioDuration);
-                    $this->emit('refreshComponent'); //updated transcription_status and other variables to be noticed on front side
-
+                   
                 } elseif ($this->audioDuration > 300) {
                     $this->alert('warning', 'Your Audio is ' . floor($this->audioDuration / 60) . ' minutes and ' . ($this->audioDuration % 60) . ' seconds. Audios longer than 5 minutes cannot be transcribed for free. Please make payments to transcribe.', [
                         'position' => 'center',

@@ -13,5 +13,6 @@ class ip extends Model
         'ip',
         'audio_path',
         'vtt_path',
+        'transcription_status',
     ];
 }

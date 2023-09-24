@@ -53,10 +53,10 @@
             </div>
 
 
-            @if ($transcription_status == 'INITIATED' || $transcription_status == 'TRANSACRIBING')
+            @if ($transcription_status == 'INITIATED' || $transcription_status == 'TRANSCRIBING')
                 @include('loaders.spinner')
             @endif
-            @if ($transcription_status == 'TRANSACRIBED')
+            @if ($transcription_status == 'TRANSCRIBED')
                 <script>
                     Livewire.emit('refreshPage');
                 </script>
@@ -68,7 +68,7 @@
                     </script>
                     <p class="mb-0">Sorry, We could not process your request currently, please try again later</p>
                 </div>
-                <!-- End while sending Response-->
+                
             @endif
 
 

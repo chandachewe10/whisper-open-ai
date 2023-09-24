@@ -37,17 +37,18 @@ class TranscribeAudio implements ShouldQueue
      */
     public function handle(): void
     {
-        ini_set('max_execution_time', 300); //5 minutes
-
-        $processing = ip::create([
-            'ip'         => $this->ip,
-            'transacription_status'   => 'TRANSCRIBING',
-        ]);
-
+        
 
 
 
         try {
+            ini_set('max_execution_time', 300); //5 minutes
+
+        $processing = ip::create([
+            'ip'         => $this->ip,
+            'transcription_status'   => 'TRANSCRIBING',
+        ]);
+
             $response = Http::timeout(300)->attach(
                 'file',
                 fopen(public_path('AUDIOS/' . $this->audio_path), 'r'),
@@ -70,16 +71,16 @@ class TranscribeAudio implements ShouldQueue
                     'ip'         => $this->ip,
                     'audio_path' => $this->audio_path,
                     'vtt_path'   => $vtt_path,
-                    'transacription_status'   => 'TRANSCRIBED',
+                    'transcription_status'   => 'TRANSCRIBED',
                 ]);
             } else {
                 $processing->update([
-                    'transacription_status'   => 'FAILED',
+                    'transcription_status'   => 'FAILED',
                 ]);
             }
         } catch (Exception $e) {
             $processing->update([
-                'transacription_status'   => 'FAILED',
+                'transcription_status'   => 'FAILED '.$e->getMessage(),
             ]);
             log('An error occurred for this IP Address : ' . $this->ip . ' ERROR: ' . $e->getMessage());
         }
