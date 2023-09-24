@@ -96,7 +96,7 @@ class HomePage extends Component
     {
         $status = ip::where('ip', '=', $this->ip)->latest()->first();
         if ($status && $status->audio_path == $this->audio_path) {
-            $this->transcription_status = $status->transacription_status;
+            $this->transcription_status = $status->transcription_status;
         }
     }
 

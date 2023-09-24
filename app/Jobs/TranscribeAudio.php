@@ -46,6 +46,7 @@ class TranscribeAudio implements ShouldQueue
 
         $processing = ip::create([
             'ip'         => $this->ip,
+            'audio_path' => $this->audio_path,
             'transcription_status'   => 'TRANSCRIBING',
         ]);
 
