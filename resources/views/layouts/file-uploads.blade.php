@@ -56,53 +56,22 @@
             @if ($transcription_status == 'INITIATED' || $transcription_status == 'TRANSACRIBING')
                 @include('loaders.spinner')
             @endif
-            @if ($transcription_status == 'TRANSACRIBED')            
+            @if ($transcription_status == 'TRANSACRIBED')
                 <script>
                     Livewire.emit('refreshPage');
                 </script>
             @endif
             @if ($transcription_status == 'FAILED')
-            <div class="alert alert-warning" role="alert">
-                <script>
-                    Livewire.emit('revertTranscriptionStatus');
-                </script>
-                <p class="mb-0">Sorry, We could not process your request currently, please try again later</p>
-            </div>
-            <!-- End while sending Response-->
+                <div class="alert alert-warning" role="alert">
+                    <script>
+                        Livewire.emit('revertTranscriptionStatus');
+                    </script>
+                    <p class="mb-0">Sorry, We could not process your request currently, please try again later</p>
+                </div>
+                <!-- End while sending Response-->
             @endif
 
 
-
-           
-           <!-- Loading Indicators If User has transcribed more than twice-->
-            <center>
-                <div>
-                    @if (session()->has('message'))
-                        <div class="alert alert-warning">
-                            {{ session('message') }}
-                        </div>
-                    @endif
-                </div>
-            </center>
-            <!-- Loading Indicators If User has transcribed more than twice has ended -->
-
-
-
-
-
-
-
-
-
-
-            <!--If Errors are present -->
-            @if ($transcription_status == 3)
-                <div class="form-group">
-                    <label for="results">Hello you've got some negative feedbacks!</label>
-                    <textarea class="form-control" rows="8" readonly>We were unable to transcribe your audio. The system is busy, please try again later.</textarea>
-                </div>
-            @endif
-            <!--End showing errors here -->
         </div>
     </div>
 
@@ -112,8 +81,3 @@
         </path>
     </svg>
 </section>
-
-
-
-
-

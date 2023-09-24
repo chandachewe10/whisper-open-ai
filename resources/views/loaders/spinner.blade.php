@@ -22,11 +22,11 @@
 </style>
 </head>
 <body>
-
-<h3>Transcribing...</h3>
+<center>
+<h3 style="color:white">Transcribing...</h3>
 
 <div class="loader" wire:poll.5s="transcriptionStatus"></div>
 <br>
 <p style="color:white">This might take a while depending on the length of your audio. The page will
   refresh automatically when the transcription is complete.</p>
-
+</center>
