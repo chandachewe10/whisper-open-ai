@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\ip;
-use Exception;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use App\Jobs\TranscribeAudio;
+use App\Models\ip;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Transcribe extends Controller
 {
@@ -42,11 +39,9 @@ class Transcribe extends Controller
         if (count($check) >= 3) {
             session()->flash('message', 'You can only transcribe twice as at now, and you have reached the maximum!');
         } else {
-
             $request->validate([
                 'audio' => 'file|max:25600', // 24 MB Max
             ]);
-
 
             $file_path = $request->file('audio')->store('TRACKS');
             TranscribeAudio::dispatch($file_path, $transcription_status, $users_ip);
