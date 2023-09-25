@@ -9,7 +9,13 @@
         </p>
     </header>
 
-    
+    @php
+        
+        $transcripts = \App\models\ip::where('user_id', '=', auth()->user()->id)
+            ->latest()
+            ->get();
+    @endphp
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -19,40 +25,28 @@
                             <thead>
                                 <tr>
                                     <th class="border p-2">No</th>
-                                    <th class="border p-2">Audio</th>
-                                    <th class="border p-2">Transcript</th>
+                                    <th class="border p-2">Status</th>
                                     <th class="border p-2">PDF</th>
                                     <th class="border p-2">Word</th>
                                     <th class="border p-2">Mail Me</th>
+                                    <th class="border p-2">Date</th>
                                     <th class="border p-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="border p-2">1</td>
-                                    <td class="border p-2">Mark</td>
-                                    <td class="border p-2">Otto</td>
-                                    <td class="border p-2">@mdo</td>
-                                    <td class="border p-2">Otto</td>
-                                    <td class="border p-2">@mdo</td>
-                                    <td class="border p-2">Delete</td>
-                                </tr>
-                                <tr>
-                                    <td class="border p-2">2</td>
-                                    <td class="border p-2">Jacob</td>
-                                    <td class="border p-2">Thornton</td>
-                                    <td class="border p-2">@fat</td>
-                                    <td class="border p-2">Otto</td>
-                                    <td class="border p-2">@mdo</td>
-                                    <td class="border p-2">Delete</td>
-                                </tr>
-                                <tr>
-                                    <td class="border p-2">3</td>
-                                    <td colspan="2" class="border p-2">Larry the Bird</td>
-                                    <td class="border p-2">@twitter</td>
-                                    <td class="border p-2">Otto</td>
-                                    <td class="border p-2">@mdo</td>
-                                    <td class="border p-2">Delete</td>
+                                    @forelse($transcripts as $transcript)
+                                        <td class="border p-2">{{ $transcript->id }}</td>
+                                        <td class="border p-2">{{ $transcript->transcription_status }}</td>
+                                        <td class="border p-2"></td>
+                                        <td class="border p-2"></td>
+                                        <td class="border p-2">{{ $transcript->created_at }}</td>
+                                        <td class="border p-2"><button class="btn btn"><i class="fas fa-trash"></i> Delete
+                                        </td>
+                                    @empty
+                                        <p>No transcripts available</p>
+                                        <br>
+                                    @endforelse
                                 </tr>
                             </tbody>
                         </table>
@@ -61,6 +55,6 @@
             </div>
         </div>
     </div>
-    
+
 
 </section>

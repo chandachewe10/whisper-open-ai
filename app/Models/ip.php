@@ -15,4 +15,14 @@ class ip extends Model
         'vtt_path',
         'transcription_status',
     ];
+
+    public function getCreatedAtAttribute($value) {
+        return $this->attributes['created_at'] = date('d,F-Y', strtotime($value));
+    }
+
+    public function transcriber()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }
