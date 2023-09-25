@@ -41,7 +41,10 @@
                                         <td class="border p-2"></td>
                                         <td class="border p-2"></td>
                                         <td class="border p-2">{{ $transcript->created_at }}</td>
-                                        <td class="border p-2"><button class="btn btn"><i class="fas fa-trash"></i> Delete
+                                        <td class="border p-2">
+                                            <button class="btn btn danger"><i class="fas fa-trash"></i> Delete</button>
+                                            <button class="btn btn info" wire:click="playAudio"><i class="fas fa-trash"></i> Play</button>
+
                                         </td>
                                     @empty
                                         <p>No transcripts available</p>

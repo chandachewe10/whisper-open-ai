@@ -30,6 +30,18 @@
                             wire:model.delay="audio"
                             accept="audio/mp3,audio/mp4,audio/mpeg,audio/mpga,audio/ma4,audio/wav,audio/webm;capture=microphone"
                             required>
+                            <br>
+                            <center>
+                                {{$isMeetingMinutes}}
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" wire:model="isMeetingMinutes" class="form-checkbox h-10 w-10">
+                                    <span class="ml-4 text-2xl" style="color: white;"><strong>Convert Audio to Meeting Minutes</strong></span>
+                                </label>
+                            </center>
+                            
+                            
+                            
+                            
                         <!-- Loading Indicators If File Upload has started-->
                         <center>
                             <div wire:loading wire:target="audio">

@@ -23,6 +23,7 @@ class HomePage extends Component
     public string $output = 'TRACKS/sample.vtt';
     public string $ip;
     public float $audioDuration;
+    public bool $isMeetingMinutes = false;
 
     // protected $listeners = ['refreshComponent' => '$refresh'];
 
@@ -59,8 +60,7 @@ class HomePage extends Component
                 $this->audioDuration = $duration;
                 if ($this->audioDuration <= 300) {
                     $this->transcription_status = 'INITIATED';
-                    TranscribeAudio::dispatch($this->audio_path, $this->transcription_status, $this->ip, $this->audioDuration);
-                   
+                    TranscribeAudio::dispatch($this->audio_path, $this->transcription_status, $this->ip, $this->audioDuration, $this->isMeetingMinutes);
                 } elseif ($this->audioDuration > 300) {
                     $this->alert('warning', 'Your Audio is ' . floor($this->audioDuration / 60) . ' minutes and ' . ($this->audioDuration % 60) . ' seconds. Audios longer than 5 minutes cannot be transcribed for free. Please make payments to transcribe.', [
                         'position' => 'center',
@@ -71,7 +71,7 @@ class HomePage extends Component
                         'onConfirmed' => '',
                     ]);
                 } else {
-                    $this->alert('warning', 'We cant get the duration of this audio.', [
+                    $this->alert('warning', 'We cant get the duration for this audio.', [
                         'position' => 'center',
                         'timer' => 10000,
                         'toast' => true,
