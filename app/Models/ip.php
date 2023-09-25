@@ -16,7 +16,8 @@ class ip extends Model
         'transcription_status',
     ];
 
-    public function getCreatedAtAttribute($value) {
+    public function getCreatedAtAttribute($value)
+    {
         return $this->attributes['created_at'] = date('d,F-Y', strtotime($value));
     }
 
@@ -24,5 +25,4 @@ class ip extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 }
