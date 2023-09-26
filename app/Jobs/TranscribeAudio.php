@@ -69,7 +69,7 @@ class TranscribeAudio implements ShouldQueue
             Storage::disk('webvtt')->put($vtt_path, $response);
             if ($response->status() == 200) {
                 $this->output = $response;
-                $this->transcription_status = 2;
+                $this->transcription_status = 'TRANSCRIBED';
 
                 /**
                  * Store Users IP Address with File Path and Vtt Path for each successfull transcription.
@@ -80,7 +80,7 @@ class TranscribeAudio implements ShouldQueue
                         'ip'         => $this->ip,
                         'audio_path' => $this->audio_path,
                         'vtt_path'   => $vtt_path,
-                        'transcription_status'   => 'TRANSCRIBED',
+                        'transcription_status'   => $this->transcription_status,
                     ]);
                 }
 
@@ -91,13 +91,13 @@ class TranscribeAudio implements ShouldQueue
 
                     // Define formatting styles
                     $boldFontStyle = ['bold' => true];
-                    $agendaStyle = ['bold' => true, 'size' => 14, 'allCaps' => true];
+                    $Style = ['bold' => true, 'size' => 14, 'allCaps' => true];
 
-                    // Add content to the document (agenda, summary, key points, sentiments)
+                    // Add content to the document 
                     $section = $phpWord->addSection();
 
-                    // Agenda (bold, centered, uppercase, font size 14)
-                    $section->addText('Audio Transcriptin :', $agendaStyle, ['alignment' => 'center']);
+                    
+                    $section->addText('Audio Transcriptin :', $Style, ['alignment' => 'center']);
                     $section->addText($response->body());
 
 
@@ -105,12 +105,12 @@ class TranscribeAudio implements ShouldQueue
                     // Save the document as a Word file
                     $docx = Str::random(40) . '.docx';
                     $pdf = Str::random(40) . '.pdf';
-                    $docx_path = public_path('DOCS/DOCX' . $docx);
+                    $docx_path = public_path('DOCS/DOCX/' . $docx);
                     $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
                     $objWriter->save($docx_path);
 
                     // Convert Word to PDF
-                    $pdf_path = public_path('DOCS/PDF' . $pdf);
+                    $pdf_path = public_path('DOCS/PDF/' . $pdf);
                     $pdf = Pdf::loadFile($docx_path);
                     $pdf->save($pdf_path);
 
@@ -118,7 +118,7 @@ class TranscribeAudio implements ShouldQueue
 
                     // Send Email with Word and PDF Attachments
                     Mail::send('email.audio_transcription', [], function ($message) use ($pdf_path, $docx_path) {
-                        $message->to('chewec03@gmail.com') // Replace with the recipient's email address
+                        $message->to('chewec03@gmail.com') 
                             ->subject('Your Audio Transcription Results')
                             ->attach($pdf_path)
                             ->attach($docx_path);
@@ -244,7 +244,7 @@ class TranscribeAudio implements ShouldQueue
                     // Define formatting styles
                     $boldFontStyle = ['bold' => true];
                     $agendaStyle = ['bold' => true, 'size' => 14, 'allCaps' => true];
-                    $normalFontSize = 12;
+                    
 
                     // Add content to the document (agenda, summary, key points, sentiments)
                     $section = $phpWord->addSection();
@@ -269,12 +269,12 @@ class TranscribeAudio implements ShouldQueue
                     // Save the document as a Word file
                     $docx = Str::random(40) . '.docx';
                     $pdf = Str::random(40) . '.pdf';
-                    $docx_path = public_path('DOCS/DOCX' . $docx);
+                    $docx_path = public_path('DOCS/DOCX/' . $docx);
                     $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
                     $objWriter->save($docx_path);
 
                     // Convert Word to PDF
-                    $pdf_path = public_path('DOCS/PDF' . $pdf);
+                    $pdf_path = public_path('DOCS/PDF/' . $pdf);
                     $pdf = Pdf::loadFile($docx_path);
                     $pdf->save($pdf_path);
 
@@ -282,7 +282,7 @@ class TranscribeAudio implements ShouldQueue
 
                     // Send Email with Word and PDF Attachments
                     Mail::send('email.meeting_transcription', [], function ($message) use ($pdf_path, $docx_path) {
-                        $message->to('chewec03@gmail.com') // Replace with the recipient's email address
+                        $message->to('chewec03@gmail.com') 
                             ->subject('Your Meeting Transcription Results')
                             ->attach($pdf_path)
                             ->attach($docx_path);
