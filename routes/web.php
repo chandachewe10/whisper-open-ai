@@ -29,10 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
 Route::get('/redirect/{provider}', [SocialiteController::class, 'loginSocial'])
-	->name('socialite.login');
+    ->name('socialite.login');
 
 Route::get('/callback/{provider}', [SocialiteController::class, 'callbackSocial']);
 
