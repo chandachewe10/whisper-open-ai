@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ip;
-use Exception;
-use App\Services\AudioDuration;
 use App\Jobs\TranscribeAudio;
+use App\Models\ip;
+use App\Services\AudioDuration;
+use Exception;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class HomePage extends Component
 {
@@ -30,7 +30,6 @@ class HomePage extends Component
 
     public function render()
     {
-
         return view('livewire.home-page')
             ->layout('welcome');
     }
@@ -52,35 +51,27 @@ class HomePage extends Component
                     'audio' => 'file|max:25600', // 25 MB Max (25 * 1024)
                 ]);
 
-
-
-
                 $file_path = $this->audio->store('TRACKS');
                 $this->audio_path = $file_path;
-                $audiofile = new AudioDuration('AUDIOS/' . $this->audio_path);
+                $audiofile = new AudioDuration('AUDIOS/'.$this->audio_path);
                 $duration = $audiofile->getDurationEstimate();
                 $this->audioDuration = $duration;
                 if ($this->audioDuration <= 300) {
                     $this->transcription_status = 'INITIATED';
                     TranscribeAudio::dispatch($this->audio_path, $this->transcription_status, $this->ip, $this->audioDuration, $this->isMeetingMinutes);
-                } 
-                
-                elseif ($this->audioDuration > 300 && !auth()->check()) {
-
-                    $this->alert('info', 'Your Audio is ' . floor($this->audioDuration / 60) . ' minutes and ' . ($this->audioDuration % 60) . ' seconds. Audios longer than 5 minutes requires you to create an account first.', [
-                        'position' => 'center',
-                        'timer' => 10000,
-                        'toast' => true,
+                } elseif ($this->audioDuration > 300 && !auth()->check()) {
+                    $this->alert('info', 'Your Audio is '.floor($this->audioDuration / 60).' minutes and '.($this->audioDuration % 60).' seconds. Audios longer than 5 minutes requires you to create an account first.', [
+                        'position'          => 'center',
+                        'timer'             => 10000,
+                        'toast'             => true,
                         'showConfirmButton' => true,
                         'confirmButtonText' => 'Create Account',
-                        'onConfirmed' => 'createAccount',
-                        'showCancelButton' => true,
-                        'cancelButtonText' => 'Login',
-                        'onDismissed' => 'Login',
+                        'onConfirmed'       => 'createAccount',
+                        'showCancelButton'  => true,
+                        'cancelButtonText'  => 'Login',
+                        'onDismissed'       => 'Login',
 
                     ]);
-
-
 
                     // $this->alert('warning', 'Your Audio is ' . floor($this->audioDuration / 60) . ' minutes and ' . ($this->audioDuration % 60) . ' seconds. Audios longer than 5 minutes cannot be transcribed for free. Please make payments to transcribe.', [
                     //     'position' => 'center',
@@ -90,32 +81,29 @@ class HomePage extends Component
                     //     'confirmButtonText' => 'Make Payments',
                     //     'onConfirmed' => '',
                     // ]);
-                }
-
-                elseif ($this->audioDuration > 300 && auth()->check()) {
+                } elseif ($this->audioDuration > 300 && auth()->check()) {
                     $this->transcription_status = 'INITIATED';
                     TranscribeAudio::dispatch($this->audio_path, $this->transcription_status, $this->ip, $this->audioDuration, $this->isMeetingMinutes);
                 } else {
                     $this->alert('warning', 'We cant get the duration for this audio.', [
-                        'position' => 'center',
-                        'timer' => 10000,
-                        'toast' => true,
+                        'position'          => 'center',
+                        'timer'             => 10000,
+                        'toast'             => true,
                         'showConfirmButton' => true,
-                        'onConfirmed' => '',
+                        'onConfirmed'       => '',
                     ]);
                 }
             }
         } catch (Exception $e) {
-            $this->alert('warning', 'Whoops something went wrong: ' . $e->getMessage(), [
-                'position' => 'center',
-                'timer' => 10000,
-                'toast' => true,
+            $this->alert('warning', 'Whoops something went wrong: '.$e->getMessage(), [
+                'position'          => 'center',
+                'timer'             => 10000,
+                'toast'             => true,
                 'showConfirmButton' => true,
-                'onConfirmed' => '',
+                'onConfirmed'       => '',
             ]);
         }
     }
-
 
     public function transcriptionStatus(): void
     {
@@ -125,11 +113,11 @@ class HomePage extends Component
         }
     }
 
-
     public function refreshPage()
     {
         //Stop Polling
         $this->transcription_status = '';
+
         return redirect(request()->header('Referer'));
     }
 
@@ -138,7 +126,6 @@ class HomePage extends Component
         //Stop Polling
         $this->transcription_status = '';
     }
-
 
     public function createAccount()
     {
