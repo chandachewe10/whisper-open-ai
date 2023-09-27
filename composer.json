@@ -14,7 +14,8 @@
         "laravel/socialite": "^5.9",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^2.12",
-        "phpoffice/phpword": "^1.1"
+        "phpoffice/phpword": "^1.1",
+        "realrashid/sweet-alert": "^7.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

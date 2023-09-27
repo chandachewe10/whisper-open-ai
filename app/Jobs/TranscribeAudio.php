@@ -296,7 +296,7 @@ class TranscribeAudio implements ShouldQueue
                         'transcription_status'   => 'TRANSCRIBED',
                     ]);
 
-                    //Convert the reponse to word and pdf document and send to user via email 
+                    
 
                 }
             } else {

@@ -32,7 +32,7 @@
                             required>
                             <br>
                             <center>
-                                {{$isMeetingMinutes}}
+                                
                                 <label class="inline-flex items-center">
                                     <input type="checkbox" wire:model="isMeetingMinutes" class="form-checkbox h-10 w-10">
                                     <span class="ml-4 text-2xl" style="color: white;"><strong>Convert Audio to Meeting Minutes</strong></span>
