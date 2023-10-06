@@ -45,16 +45,15 @@ class TranscribeAudio implements ShouldQueue
     {
 
 
-
+        $processing = ip::create([
+            'ip'         => $this->ip,
+            'audio_path' => $this->audio_path,
+            'transcription_status'   => 'TRANSCRIBING',
+            'user_id'         => auth()->check() ? auth()->user()->id : 1,
+        ]);
 
         try {
             ini_set('max_execution_time', 300); //5 minutes
-
-            $processing = ip::create([
-                'ip'         => $this->ip,
-                'audio_path' => $this->audio_path,
-                'transcription_status'   => 'TRANSCRIBING',
-            ]);
 
             $response = Http::timeout(300)->attach(
                 'file',
@@ -81,6 +80,7 @@ class TranscribeAudio implements ShouldQueue
                         'audio_path' => $this->audio_path,
                         'vtt_path'   => $vtt_path,
                         'transcription_status'   => $this->transcription_status,
+                        'user_id'         => auth()->check() ? auth()->user()->id : 1,
                     ]);
                 }
 
@@ -96,7 +96,7 @@ class TranscribeAudio implements ShouldQueue
                     // Add content to the document 
                     $section = $phpWord->addSection();
 
-                    
+
                     $section->addText('Audio Transcriptin :', $Style, ['alignment' => 'center']);
                     $section->addText($response->body());
 
@@ -118,7 +118,7 @@ class TranscribeAudio implements ShouldQueue
 
                     // Send Email with Word and PDF Attachments
                     Mail::send('email.audio_transcription', [], function ($message) use ($pdf_path, $docx_path) {
-                        $message->to('chewec03@gmail.com') 
+                        $message->to('chewec03@gmail.com')
                             ->subject('Your Audio Transcription Results')
                             ->attach($pdf_path)
                             ->attach($docx_path);
@@ -244,7 +244,7 @@ class TranscribeAudio implements ShouldQueue
                     // Define formatting styles
                     $boldFontStyle = ['bold' => true];
                     $agendaStyle = ['bold' => true, 'size' => 14, 'allCaps' => true];
-                    
+
 
                     // Add content to the document (agenda, summary, key points, sentiments)
                     $section = $phpWord->addSection();
@@ -282,7 +282,7 @@ class TranscribeAudio implements ShouldQueue
 
                     // Send Email with Word and PDF Attachments
                     Mail::send('email.meeting_transcription', [], function ($message) use ($pdf_path, $docx_path) {
-                        $message->to('chewec03@gmail.com') 
+                        $message->to('chewec03@gmail.com')
                             ->subject('Your Meeting Transcription Results')
                             ->attach($pdf_path)
                             ->attach($docx_path);
@@ -294,10 +294,8 @@ class TranscribeAudio implements ShouldQueue
                         'audio_path' => $this->audio_path,
                         'vtt_path'   => $vtt_path,
                         'transcription_status'   => 'TRANSCRIBED',
+                        'user_id'         => auth()->check() ? auth()->user()->id : 1,
                     ]);
-
-                    
-
                 }
             } else {
                 $processing->update([

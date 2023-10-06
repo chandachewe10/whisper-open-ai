@@ -6,7 +6,7 @@
     <div class="row text-center">
       <h1 class="display-3 fw-bold text-uppercase">faq</h1>
       <div class="heading-line"></div>
-      <p class="lead">frequently asked questions, get knowledge befere hand</p>
+      <p class="lead">frequently asked questions, get knowledge before hand</p>
     </div>
     <!-- ACCORDION CONTENT  -->
     <div class="row mt-5">

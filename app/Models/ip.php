@@ -14,6 +14,7 @@ class ip extends Model
         'audio_path',
         'vtt_path',
         'transcription_status',
+        'user_id',
     ];
 
     public function getCreatedAtAttribute($value) {
