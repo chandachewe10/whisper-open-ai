@@ -24,7 +24,6 @@ class HomePage extends Component
 
     public function render()
     {
-
         return view('livewire.home-page')
             ->layout('welcome');
     }
@@ -52,18 +51,18 @@ class HomePage extends Component
                 $response = Http::timeout(300)
                     ->attach(
                         'file',
-                        fopen(public_path('AUDIOS/' . $file_path), 'r')
+                        fopen(public_path('AUDIOS/'.$file_path), 'r')
                     )
                     ->withToken(config('openai.token'))
 
-                    ->post(config('openai.base_uri') . 'audio/transcriptions', [
+                    ->post(config('openai.base_uri').'audio/transcriptions', [
                         'model'           => 'whisper-1',
                         'response_format' => 'vtt',
                         'temperature'     => 0.2,
                     ]);
 
-                $vtt_path = Str::random(40) . '.vtt';
-                Storage::disk('webvtt')->put('VTTFILES/' . $vtt_path, $response);
+                $vtt_path = Str::random(40).'.vtt';
+                Storage::disk('webvtt')->put('VTTFILES/'.$vtt_path, $response);
                 if ($response->status() == 200) {
                     $this->output = $response;
                     $this->transcription_status = 2;
