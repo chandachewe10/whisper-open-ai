@@ -1,0 +1,27 @@
+<?php
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\HomePage;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::get('/', [HomePage::class, '__invoke']);
+
+Route::get('/privacy-policy',function(){
+    return view('privacy-policy.privacy-policy'); 
+})->middleware('guest')
+->name('privacy.policy');
+
+
+
+require __DIR__.'/auth.php';
