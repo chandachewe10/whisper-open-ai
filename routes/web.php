@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\HomePage;
 use Illuminate\Support\Facades\Route;
 
@@ -17,11 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomePage::class, '__invoke']);
 
-Route::get('/privacy-policy',function(){
-    return view('privacy-policy.privacy-policy'); 
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy.privacy-policy');
 })->middleware('guest')
 ->name('privacy.policy');
-
-
 
 require __DIR__.'/auth.php';
