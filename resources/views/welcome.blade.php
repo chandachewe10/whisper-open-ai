@@ -1,8 +1,1 @@
-
-
-
-
-<livewire:home-page /> 
-
-
-
+<livewire:home-page />
