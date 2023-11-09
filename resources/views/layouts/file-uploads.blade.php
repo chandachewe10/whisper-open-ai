@@ -109,14 +109,14 @@
 
 
             @if ($exception)
-                <!-- While sending Exception-->
-
-                <div class="alert alert-warning" role="alert">
-
-                    <hr>
-                    <p class="mb-0">The system can't transcribe your audio {{ $exception }}</p>
+                <!--Exception-->
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Whoops!!! something went wrong, try again!</strong> {{ $exception }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <!-- End while sending Exception-->
+                <!-- Exception-->
             @endif
 
 
@@ -133,33 +133,18 @@
 
 
 
-            <!-- Loading Indicators If User has transcribed more than twice-->
-            <center>
-                <div>
-                    @if (session()->has('message'))
-                        <div class="alert alert-warning">
-                            {{ session('message') }}
-                        </div>
-                    @endif
-                </div>
-            </center>
-            <!-- Loading Indicators If User has transcribed more than twice has ended -->
-
-
-
-
-
-
-
-
-
+         
 
             <!--If Errors are present -->
             @if ($transcription_status == 3)
-                <div class="form-group">
 
-                    <textarea class="form-control" rows="8" readonly>Whoops!!! something went wrong, try again {{ $exception }} </textarea>
-                </div>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Whoops!!! something went wrong, try again!</strong> {{ $exception }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              
             @endif
             <!--End showing errors here -->
         </div>

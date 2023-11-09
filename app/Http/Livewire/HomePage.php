@@ -52,7 +52,7 @@ class HomePage extends Component
         ## Check For Email and Phone Number if Minute Meeting is Selected  
         if ($this->isMeetingMinutes && empty($this->email) || empty($this->phone)) {
             $this->alert('warning', 'Please Ensure your email and phone number are entered.');
-            $this->transcription_status = 3;
+            return;
         }
 
 
