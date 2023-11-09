@@ -6,8 +6,8 @@ use App\Models\ip;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Str;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use PhpOffice\PhpWord\IOFactory;
@@ -30,31 +30,25 @@ class HomePage extends Component
     public string $email;
     public string $phone;
 
-
     public function mount()
     {
         $this->email = '';
         $this->phone = '';
     }
 
-
-
     public function render()
     {
-
         return view('livewire.home-page')
             ->layout('welcome');
     }
 
     public function translate()
     {
-
-        ## Check For Email and Phone Number if Minute Meeting is Selected  
+        //# Check For Email and Phone Number if Minute Meeting is Selected
         if ($this->isMeetingMinutes && empty($this->email) || empty($this->phone)) {
             $this->alert('warning', 'Please Ensure your email and phone number are entered.');
             return;
         }
-
 
         ini_set('max_execution_time', 600); //10 minutes
         /**
@@ -77,18 +71,18 @@ class HomePage extends Component
                 $response = Http::timeout(300)
                     ->attach(
                         'file',
-                        fopen(public_path('AUDIOS/' . $file_path), 'r')
+                        fopen(public_path('AUDIOS/'.$file_path), 'r')
                     )
                     ->withToken(config('openai.token'))
 
-                    ->post(config('openai.base_uri') . 'audio/transcriptions', [
+                    ->post(config('openai.base_uri').'audio/transcriptions', [
                         'model'           => 'whisper-1',
                         'response_format' => 'vtt',
                         'temperature'     => 0.2,
                     ]);
 
-                $vtt_path = Str::random(40) . '.vtt';
-                Storage::disk('webvtt')->put('VTTFILES/' . $vtt_path, $response);
+                $vtt_path = Str::random(40).'.vtt';
+                Storage::disk('webvtt')->put('VTTFILES/'.$vtt_path, $response);
                 if ($response->status() == 200) {
                     $this->output = $response;
                     $this->transcription_status = 2;
@@ -117,164 +111,136 @@ class HomePage extends Component
         }
     }
 
-
-
     private function minutes()
     {
         try {
             $Meetingresponse = Http::timeout(300)
                 ->attach(
                     'file',
-                    fopen(public_path('AUDIOS/' . $this->audio_path), 'r')
+                    fopen(public_path('AUDIOS/'.$this->audio_path), 'r')
                 )
                 ->withToken(config('openai.token'))
 
-                ->post(config('openai.base_uri') . 'audio/transcriptions', [
+                ->post(config('openai.base_uri').'audio/transcriptions', [
                     'model'           => 'whisper-1',
                     'response_format' => 'text',
                     'temperature'     => 0.2,
                 ]);
 
-
             if ($Meetingresponse->status() == 200) {
-
-
                 // Get the meetings summary from gpt-3.5-turbo
                 $meeting_summary = Http::timeout(300)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->withToken(config('openai.token'))->post(config('openai.base_uri') . 'chat/completions', [
-                    'model' => 'gpt-3.5-turbo',
+                ])->withToken(config('openai.token'))->post(config('openai.base_uri').'chat/completions', [
+                    'model'    => 'gpt-3.5-turbo',
                     'messages' => [
                         [
-                            'role' => 'system',
+                            'role'    => 'system',
                             'content' => 'You are a highly skilled AI trained in language comprehension and summarization. I would like you to read the following text and summarize it into a concise abstract paragraph. Aim to retain the most important points, providing a coherent and readable summary that could help a person understand the main points of the discussion without needing to read the entire text. Please avoid unnecessary details or tangential points.',
                         ],
                         [
-                            'role' => 'user',
+                            'role'    => 'user',
                             'content' => $Meetingresponse->body(),
                         ],
                     ],
                 ]);
 
-
                 $summary = $meeting_summary['choices'][0]['message']['content'];
-
-
-
 
                 // Get the meetings key points from gpt-3.5-turbo
                 $meeting_keypoints = Http::timeout(300)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->withToken(config('openai.token'))->post(config('openai.base_uri') . 'chat/completions', [
-                    'model' => 'gpt-3.5-turbo',
+                ])->withToken(config('openai.token'))->post(config('openai.base_uri').'chat/completions', [
+                    'model'    => 'gpt-3.5-turbo',
                     'messages' => [
                         [
-                            'role' => 'system',
+                            'role'    => 'system',
                             'content' => 'You are a proficient AI with a specialty in distilling information into key points. Based on the following text, identify and list the main points that were discussed or brought up. These should be the most important ideas, findings, or topics that are crucial to the essence of the discussion. Your goal is to provide a list that someone could read to quickly understand what was talked about.',
                         ],
                         [
-                            'role' => 'user',
+                            'role'    => 'user',
                             'content' => $Meetingresponse->body(),
                         ],
                     ],
                 ]);
 
-
                 $keypoints = $meeting_keypoints['choices'][0]['message']['content'];
-
 
                 // Get the meetings action points from gpt-3.5-turbo
                 $meeting_actions = Http::timeout(300)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->withToken(config('openai.token'))->post(config('openai.base_uri') . 'chat/completions', [
-                    'model' => 'gpt-3.5-turbo',
+                ])->withToken(config('openai.token'))->post(config('openai.base_uri').'chat/completions', [
+                    'model'    => 'gpt-3.5-turbo',
                     'messages' => [
                         [
-                            'role' => 'system',
+                            'role'    => 'system',
                             'content' => 'You are an AI expert in analyzing conversations and extracting action items. Please review the text and identify any tasks, assignments, or actions that were agreed upon or mentioned as needing to be done. These could be tasks assigned to specific individuals, or general actions that the group has decided to take. Please list these action items clearly and concisely.',
                         ],
                         [
-                            'role' => 'user',
+                            'role'    => 'user',
                             'content' => $Meetingresponse->body(),
                         ],
                     ],
                 ]);
 
-
                 $actions = $meeting_actions['choices'][0]['message']['content'];
-
-
-
-
 
                 // Get the meetings sentimemnts points from gpt-3.5-turbo
                 $meeting_sentiments = Http::timeout(300)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->withToken(config('openai.token'))->post(config('openai.base_uri') . 'chat/completions', [
-                    'model' => 'gpt-3.5-turbo',
+                ])->withToken(config('openai.token'))->post(config('openai.base_uri').'chat/completions', [
+                    'model'    => 'gpt-3.5-turbo',
                     'messages' => [
                         [
-                            'role' => 'system',
+                            'role'    => 'system',
                             'content' => 'As an AI with expertise in language and emotion analysis, your task is to analyze the sentiment of the following text. Please consider the overall tone of the discussion, the emotion conveyed by the language used, and the context in which words and phrases are used. Indicate whether the sentiment is generally positive, negative, or neutral, and provide brief explanations for your analysis where possible.',
                         ],
                         [
-                            'role' => 'user',
+                            'role'    => 'user',
                             'content' => $Meetingresponse->body(),
                         ],
                     ],
                 ]);
 
-
                 $sentiments = $meeting_sentiments['choices'][0]['message']['content'];
-
 
                 // Get the meetings agenda points from gpt-3.5-turbo
                 $meeting_agenda = Http::timeout(300)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->withToken(config('openai.token'))->post(config('openai.base_uri') . 'chat/completions', [
-                    'model' => 'gpt-3.5-turbo',
+                ])->withToken(config('openai.token'))->post(config('openai.base_uri').'chat/completions', [
+                    'model'    => 'gpt-3.5-turbo',
                     'messages' => [
                         [
-                            'role' => 'system',
+                            'role'    => 'system',
                             'content' => 'Please come up with a short title/agenda of the meeting based on the following texts.',
                         ],
                         [
-                            'role' => 'user',
+                            'role'    => 'user',
                             'content' => $Meetingresponse->body(),
                         ],
                     ],
                 ]);
 
-
                 $agenda = $meeting_agenda['choices'][0]['message']['content'];
-
-
 
                 // Get the meetings conclusion points from gpt-3.5-turbo
                 $meeting_conclusion = Http::timeout(300)->withHeaders([
                     'Content-Type' => 'application/json',
-                ])->withToken(config('openai.token'))->post(config('openai.base_uri') . 'chat/completions', [
-                    'model' => 'gpt-3.5-turbo',
+                ])->withToken(config('openai.token'))->post(config('openai.base_uri').'chat/completions', [
+                    'model'    => 'gpt-3.5-turbo',
                     'messages' => [
                         [
-                            'role' => 'system',
+                            'role'    => 'system',
                             'content' => 'Please come up with the meeting conclusion based on the following texts.',
                         ],
                         [
-                            'role' => 'user',
+                            'role'    => 'user',
                             'content' => $Meetingresponse->body(),
                         ],
                     ],
                 ]);
 
-
                 $conclusion = $meeting_conclusion['choices'][0]['message']['content'];
-
-
-
-
-
-
 
                 // Create a new PhpWord instance
                 $phpWord = new PhpWord();
@@ -282,7 +248,6 @@ class HomePage extends Component
                 // Define formatting styles
                 $boldFontStyle = ['bold' => true];
                 $agendaStyle = ['bold' => true, 'size' => 14, 'allCaps' => true];
-
 
                 // Add content to the document (agenda, summary, key points, sentiments)
                 $section = $phpWord->addSection();
@@ -307,12 +272,10 @@ class HomePage extends Component
                 $section->addText($conclusion);
 
                 // Save the document as a Word file
-                $docx = Str::random(40) . '.docx';
-                $docx_path = public_path('DOCS/DOCX/' . $docx);
+                $docx = Str::random(40).'.docx';
+                $docx_path = public_path('DOCS/DOCX/'.$docx);
                 $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
                 $objWriter->save($docx_path);
-
-
 
                 // Send Email with Word and PDF Attachments
                 Mail::send('meeting_transcription.index', [], function ($message) use ($docx_path) {
@@ -321,7 +284,7 @@ class HomePage extends Component
                         ->attach($docx_path);
                 });
 
-                // Send SMS Notification 
+                // Send SMS Notification
                 $this->send_notification_sms();
 
                 return redirect(request()->header('Referer'));
@@ -334,13 +297,12 @@ class HomePage extends Component
         }
     }
 
-
     private function send_notification_sms()
     {
         $jsonDataSMS = [
-            "sender_id" => "MACROIT",
-            "numbers" => $this->phone,
-            "message" => 'We wanted to let you know that your file has been transcribed and has been shared to your email address!',
+            'sender_id' => 'MACROIT',
+            'numbers'   => $this->phone,
+            'message'   => 'We wanted to let you know that your file has been transcribed and has been shared to your email address!',
 
         ];
 
@@ -348,9 +310,9 @@ class HomePage extends Component
         $jsonData = json_encode($jsonDataSMS);
 
         Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('BULK_SMS_TOKEN'),
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.env('BULK_SMS_TOKEN'),
+            'Content-Type'  => 'application/json',
+            'Accept'        => 'application/json',
         ])
             ->timeout(300)
             ->withBody($jsonData, 'application/json')
