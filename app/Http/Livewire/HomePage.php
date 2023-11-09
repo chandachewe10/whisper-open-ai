@@ -48,9 +48,9 @@ class HomePage extends Component
         //# Check For Email and Phone Number if Minute Meeting is Selected
         if ($this->isMeetingMinutes && (empty($this->email) || empty($this->phone))) {
             $this->alert('warning', 'Please Ensure your email and phone number are entered.');
+
             return;
         }
-        
 
         ini_set('max_execution_time', 600); //10 minutes
         /**

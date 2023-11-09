@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -9,7 +10,8 @@ use Illuminate\Queue\SerializesModels;
 
 class MeetingTranscriptionResult extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $docxPath;
 
@@ -36,7 +38,7 @@ class MeetingTranscriptionResult extends Mailable
     {
         return [
             $this->docxPath => [
-                'as' => 'meeting_transcription.docx', 
+                'as' => 'meeting_transcription.docx',
             ],
         ];
     }
