@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\MeetingTranscriptionResult;
 use App\Models\ip;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -45,10 +46,11 @@ class HomePage extends Component
     public function translate()
     {
         //# Check For Email and Phone Number if Minute Meeting is Selected
-        if ($this->isMeetingMinutes && empty($this->email) || empty($this->phone)) {
+        if ($this->isMeetingMinutes && (empty($this->email) || empty($this->phone))) {
             $this->alert('warning', 'Please Ensure your email and phone number are entered.');
             return;
         }
+        
 
         ini_set('max_execution_time', 600); //10 minutes
         /**
@@ -277,12 +279,9 @@ class HomePage extends Component
                 $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
                 $objWriter->save($docx_path);
 
-                // Send Email with Word and PDF Attachments
-                Mail::send('meeting_transcription.index', [], function ($message) use ($docx_path) {
-                    $message->to($this->email)
-                        ->subject('Your Meeting Transcription Results')
-                        ->attach($docx_path);
-                });
+                // Send Email with Word Attachment
+                Mail::to($this->email)
+                ->send(new MeetingTranscriptionResult($docx_path));
 
                 // Send SMS Notification
                 $this->send_notification_sms();
